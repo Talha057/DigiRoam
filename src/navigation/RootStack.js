@@ -4,7 +4,7 @@ import AuthStack from './auth';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RootStack = () => {
-  return <AuthStack />;
+  return <BottomTab />;
 };
 
 export default RootStack;

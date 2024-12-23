@@ -21,6 +21,7 @@
     "react-native": "0.76.5",
     "react-native-check-box": "^2.1.7",
     "react-native-elements": "^3.4.3",
+    "react-native-reanimated": "^3.16.6",
     "react-native-safe-area-context": "^5.0.0",
     "react-native-screens": "^4.3.0",
     "react-native-simple-toast": "^3.3.1",
