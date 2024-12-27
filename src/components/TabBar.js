@@ -1,4 +1,12 @@
-import {View, Platform, StyleSheet, Image, Pressable} from 'react-native';
+import {
+  View,
+  Platform,
+  StyleSheet,
+  Image,
+  Pressable,
+  SafeAreaView,
+  Keyboard,
+} from 'react-native';
 import {useLinkBuilder, useTheme} from '@react-navigation/native';
 import {Text, PlatformPressable} from '@react-navigation/elements';
 import {globalColors} from '../constants/Colors';
@@ -11,6 +19,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
+  withTiming,
 } from 'react-native-reanimated';
 
 function MyTabBar({state, descriptors, navigation}) {
@@ -18,6 +27,7 @@ function MyTabBar({state, descriptors, navigation}) {
     height: 20,
     width: 100,
   });
+  const isKeyboardVisible = useSharedValue(0);
   const onTabbarLayout = e => {
     setBarDimensions({
       height: e.nativeEvent.layout.height,
@@ -42,6 +52,32 @@ function MyTabBar({state, descriptors, navigation}) {
       duration: 1500,
     });
   }, [state.index]);
+  useEffect(() => {
+    const keyboardWillShow = Keyboard.addListener('keyboardDidShow', () => {
+      isKeyboardVisible.value = 1; // Keyboard visible
+    });
+
+    const keyboardWillHide = Keyboard.addListener('keyboardDidHide', () => {
+      isKeyboardVisible.value = 0; // Keyboard hidden
+    });
+
+    return () => {
+      keyboardWillShow.remove();
+      keyboardWillHide.remove();
+    };
+  }, []);
+  const keyboardStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateY: withTiming(isKeyboardVisible.value === 1 ? 100 : 0, {
+          duration: 250,
+        }),
+      },
+    ],
+    opacity: withTiming(isKeyboardVisible.value === 1 ? 0 : 1, {
+      duration: 250,
+    }),
+  }));
   const icon = {
     Store: props => (
       <Image
@@ -63,7 +99,9 @@ function MyTabBar({state, descriptors, navigation}) {
     ),
   };
   return (
-    <View onLayout={onTabbarLayout} style={styles.tabBar}>
+    <Animated.View
+      onLayout={onTabbarLayout}
+      style={[styles.tabBar, keyboardStyle]}>
       <Animated.View style={tabStyle} />
       {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];
@@ -119,7 +157,7 @@ function MyTabBar({state, descriptors, navigation}) {
           </Pressable>
         );
       })}
-    </View>
+    </Animated.View>
   );
 }
 export default MyTabBar;

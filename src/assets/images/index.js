@@ -16,3 +16,5 @@ export const usFlag = require('./main/usFlag.jpeg');
 export const dubaiFlag = require('./main/dubaiFlag.png');
 export const africaFlag = require('./main/africaFlag.png');
 export const ukFlag = require('./main/ukFlag.png');
+export const bannerBg = require('./main/bannerBg.png');
+export const simBanner = require('./main/simBanner.png');
