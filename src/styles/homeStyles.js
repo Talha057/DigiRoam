@@ -89,6 +89,15 @@ export const homeStyles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomColor: '#fff',
   },
+  simIconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+  },
+  simIcon: {
+    width: scaleXValue(20),
+    height: scaleYValue(20),
+  },
   simLabel: {
     color: globalColors.textColor,
     fontFamily: 'Montserrat-Regular',
@@ -143,5 +152,15 @@ export const homeStyles = StyleSheet.create({
     paddingTop: '5%',
     paddingBottom: '8%',
     paddingHorizontal: '2%',
+  },
+  btn: {
+    backgroundColor: globalColors.textColor,
+    borderRadius: 10,
+  },
+  btnText: {
+    textAlign: 'center',
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 12,
+    padding: 2,
   },
 });

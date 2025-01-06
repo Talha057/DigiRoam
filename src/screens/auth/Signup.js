@@ -42,6 +42,7 @@ const Signup = ({navigation}) => {
     try {
       const response = await dispatch(signup(data)).unwrap();
       Toast.show(response.message);
+      navigation.navigate('OtpVerification', {email, key: 'verify'});
     } catch (err) {
       Toast.show(err);
     }
@@ -102,8 +103,8 @@ const Signup = ({navigation}) => {
           <View style={loginStyles.passwordContainer}>
             <TextInput
               placeholder=""
-              secureTextEntry={showConfirmPassword}
-              value={!confirmPass}
+              secureTextEntry={!showConfirmPassword}
+              value={confirmPass}
               onChangeText={setConfirmPass}
               style={loginStyles.password}
             />

@@ -32,6 +32,8 @@
 		E39C6C2855CE4D1BA7DCBA94 /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABC89A25E07049CF95BE1FF0 /* Montserrat-SemiBoldItalic.ttf */; };
 		692A4730FA274B4BA5392EC7 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD1BB903BDAC472D9688B99B /* Montserrat-Thin.ttf */; };
 		C4567A605BD041BAB2362213 /* Montserrat-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95482A7AE7954A9CA5674803 /* Montserrat-ThinItalic.ttf */; };
+		AC00861CFFA24618A0DD1E3F /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791CA70A04734A46B8C61B70 /* BootSplash.storyboard */; };
+		4D3BD33B1E05407AB387FD6F /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C48885FE77F4A69BE0CF6FA /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +83,8 @@
 		ABC89A25E07049CF95BE1FF0 /* Montserrat-SemiBoldItalic.ttf */ = {isa = PBXFileReference; name = "Montserrat-SemiBoldItalic.ttf"; path = "../src/assets/fonts/Montserrat-SemiBoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		FD1BB903BDAC472D9688B99B /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; name = "Montserrat-Thin.ttf"; path = "../src/assets/fonts/Montserrat-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		95482A7AE7954A9CA5674803 /* Montserrat-ThinItalic.ttf */ = {isa = PBXFileReference; name = "Montserrat-ThinItalic.ttf"; path = "../src/assets/fonts/Montserrat-ThinItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		791CA70A04734A46B8C61B70 /* BootSplash.storyboard */ = {isa = PBXFileReference; name = "BootSplash.storyboard"; path = "RoamDigi/BootSplash.storyboard"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5C48885FE77F4A69BE0CF6FA /* Colors.xcassets */ = {isa = PBXFileReference; name = "Colors.xcassets"; path = "RoamDigi/Colors.xcassets"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = folder.assetcatalog; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +134,8 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
+				791CA70A04734A46B8C61B70 /* BootSplash.storyboard */,
+				5C48885FE77F4A69BE0CF6FA /* Colors.xcassets */,
 			);
 			name = RoamDigi;
 			sourceTree = "<group>";
@@ -326,6 +332,8 @@
 				E39C6C2855CE4D1BA7DCBA94 /* Montserrat-SemiBoldItalic.ttf in Resources */,
 				692A4730FA274B4BA5392EC7 /* Montserrat-Thin.ttf in Resources */,
 				C4567A605BD041BAB2362213 /* Montserrat-ThinItalic.ttf in Resources */,
+				AC00861CFFA24618A0DD1E3F /* BootSplash.storyboard in Resources */,
+				4D3BD33B1E05407AB387FD6F /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

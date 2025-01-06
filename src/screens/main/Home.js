@@ -33,8 +33,9 @@ import {
 import {interpolate} from 'react-native-reanimated';
 import {globalStyle} from '../../styles/globalStyles';
 import {homeStyles} from '../../styles/homeStyles';
+import SimCard from '../../components/SimCard';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const [activeTab, setActiveTab] = useState('local');
   const regionalData = [
     {title: 'Africa', image: africaMap},
@@ -117,71 +118,14 @@ const Home = () => {
         <ScrollView
           style={homeStyles.globalContainer}
           showsVerticalScrollIndicator={false}>
-          {[0, 0, 0].map((elem, index) => (
-            <ImageBackground
-              source={bannerBg}
-              imageStyle={{
-                borderRadius: 20,
-              }}
-              style={[
-                homeStyles.globalImageContainer,
-                {
-                  marginBottom: index === 2 ? height * 0.18 : height * 0.05,
-                },
-              ]}>
-              <Image
-                source={simBanner}
-                resizeMode="cover"
-                style={homeStyles.simBanner}
-              />
-              <View style={homeStyles.simTextRoot}>
-                <View style={homeStyles.simTextContainer}>
-                  <View>
-                    <Image source={{}} />
-                    <Text style={homeStyles.simLabel}>COVERAGE</Text>
-                  </View>
-                  <Text style={homeStyles.simValue}>UNITED STATES</Text>
-                </View>
-                <View style={homeStyles.simTextContainer}>
-                  <View>
-                    <Image source={{}} />
-                    <Text style={homeStyles.simLabel}>DATA</Text>
-                  </View>
-                  <Text style={homeStyles.simValue}>2 GB</Text>
-                </View>
-                <View style={homeStyles.simTextContainer}>
-                  <View>
-                    <Image source={{}} />
-                    <Text style={homeStyles.simLabel}>VALIDITY</Text>
-                  </View>
-                  <Text style={homeStyles.simValue}>7 DAYS</Text>
-                </View>
-                <View style={homeStyles.simTextContainer}>
-                  <View>
-                    <Image source={{}} />
-                    <Text style={homeStyles.simLabel}>PRICE</Text>
-                  </View>
-                  <Text style={homeStyles.simValue}>$ 4.0 USD</Text>
-                </View>
-                <View style={homeStyles.btnContainer}>
-                  <View
-                    style={{
-                      backgroundColor: globalColors.textColor,
-                      borderRadius: 10,
-                    }}>
-                    <Text
-                      style={{
-                        textAlign: 'center',
-                        fontFamily: 'Montserrat-Medium',
-                        fontSize: 12,
-                        padding: 2,
-                      }}>
-                      Details
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </ImageBackground>
+          {[0, 0, 0].map((item, index) => (
+            <View
+              key={index}
+              style={{
+                marginBottom: index === 2 ? height * 0.13 : height * 0.01,
+              }}>
+              <SimCard index={index} item={item} />
+            </View>
           ))}
         </ScrollView>
       ) : (
@@ -201,7 +145,9 @@ const Home = () => {
             data={activeTab === 'local' ? localData : regionalData}
             contentContainerStyle={homeStyles.listContainer}
             renderItem={({item, index}) => (
-              <View style={homeStyles.listItem}>
+              <Pressable
+                style={homeStyles.listItem}
+                onPress={() => navigation.navigate('AllSims', {item})}>
                 <View style={homeStyles.listImageContainer}>
                   <Image source={item.image} style={homeStyles.listImage} />
                   <Text style={homeStyles.listTitle}>{item.title}</Text>
@@ -211,7 +157,7 @@ const Home = () => {
                   size={scaleValue(20)}
                   color={globalColors.textColor}
                 />
-              </View>
+              </Pressable>
             )}
           />
         </ScrollView>

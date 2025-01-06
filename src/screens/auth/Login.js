@@ -20,6 +20,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {login} from '../../store/auth/authThunk';
 import Toast from 'react-native-simple-toast';
 import Button from '../../components/Button';
+import {setToken} from '../../store/auth/authSlice';
 
 const Login = ({navigation}) => {
   const [checked, setChecked] = useState(true);
@@ -34,6 +35,7 @@ const Login = ({navigation}) => {
     try {
       const response = await dispatch(login(data)).unwrap();
       Toast.show(response.message);
+      dispatch(setToken('abc'));
     } catch (err) {
       console.log(err);
       Toast.show(err);
@@ -92,7 +94,11 @@ const Login = ({navigation}) => {
             />
             <Text style={loginStyles.rememberText}>Remember Me</Text>
           </View>
-          <Text style={loginStyles.forgotpass}>Forgot Password</Text>
+          <Text
+            style={loginStyles.forgotpass}
+            onPress={() => navigation.navigate('ForgotPassword')}>
+            Forgot Password
+          </Text>
         </View>
         <Button
           btnStyle={loginStyles.loginBtn}

@@ -30,3 +30,39 @@ export const signup = createAsyncThunk(
     }
   },
 );
+export const forgotPassword = createAsyncThunk(
+  'auth/forgotPassword',
+  async (data, {rejectWithValue}) => {
+    try {
+      const res = await apiManager.post('/user/forgot-password', data);
+      return res.data;
+    } catch (error) {
+      return throwError(error, rejectWithValue);
+    }
+  },
+);
+export const verifyOtp = createAsyncThunk(
+  'auth/verifyOtp',
+  async (data, {rejectWithValue}) => {
+    try {
+      const res = await apiManager.post('/user/verifyOtp', data);
+      return res.data;
+    } catch (error) {
+      return throwError(error, rejectWithValue);
+    }
+  },
+);
+export const resetOtp = createAsyncThunk(
+  'auth/resetOtp',
+  async (data, {rejectWithValue}) => {
+    try {
+      const res = await apiManager.post(
+        '/user/verifyForgotPasswordOtpVerification',
+        data,
+      );
+      return res.data;
+    } catch (error) {
+      return throwError(error, rejectWithValue);
+    }
+  },
+);

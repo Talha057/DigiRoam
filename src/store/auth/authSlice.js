@@ -1,14 +1,19 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {login, signup} from './authThunk';
+import {forgotPassword, login, resetOtp, signup, verifyOtp} from './authThunk';
 
 const INITIAL_STATE = {
   user: null,
   loading: false,
+  token: null,
 };
 const authSlice = createSlice({
   initialState: INITIAL_STATE,
   name: 'auth',
-  reducers: {},
+  reducers: {
+    setToken: (state, action) => {
+      state.token = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(login.pending, (state, action) => {
       state.loading = true;
@@ -29,6 +34,34 @@ const authSlice = createSlice({
     builder.addCase(signup.rejected, (state, action) => {
       state.loading = false;
     });
+    builder.addCase(forgotPassword.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(forgotPassword.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(forgotPassword.rejected, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(verifyOtp.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(verifyOtp.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(verifyOtp.rejected, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(resetOtp.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(resetOtp.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(resetOtp.rejected, (state, action) => {
+      state.loading = false;
+    });
   },
 });
+export const {setToken} = authSlice.actions;
 export default authSlice.reducer;
