@@ -6,8 +6,8 @@ import {useSelector} from 'react-redux';
 
 const RootStack = () => {
   const {token} = useSelector(state => state.auth);
-  // return token ? <BottomTab /> : <AuthStack />;
-  return <BottomTab />;
+  return token ? <BottomTab /> : <AuthStack />;
+  // return <BottomTab />;
 };
 
 export default RootStack;

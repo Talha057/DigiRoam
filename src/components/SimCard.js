@@ -16,7 +16,7 @@ const SimCard = ({index, item}) => {
   return (
     <Pressable
       onPress={() =>
-        navigation.navigate('SimDetails', {item: {title: 'Pakistan Sim'}})
+        navigation.navigate('SimDetails', {item: {title: 'Discover'}})
       }>
       <ImageBackground
         source={bannerBg}

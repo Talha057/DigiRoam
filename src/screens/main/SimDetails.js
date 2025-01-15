@@ -14,7 +14,7 @@ import {
   simIcon3,
   simIcon4,
 } from '../../assets/images';
-import {height, width} from '../../utils';
+import {height} from '../../utils';
 
 const SimDetails = ({route}) => {
   const {item} = route.params;
