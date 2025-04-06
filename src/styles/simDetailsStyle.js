@@ -15,6 +15,7 @@ export const simDetailsStyle = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: '5%',
     paddingVertical: '4.5%',
+    gap: 5,
     borderBottomWidth: 0.5,
     borderBottomColor: '#fff',
   },

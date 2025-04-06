@@ -14,7 +14,7 @@ import {height, width} from '../../utils';
 import {scaleValue, scaleXValue, scaleYValue} from '../../constants/Sizes';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
   africaMap,
   banner,
@@ -34,9 +34,15 @@ import {interpolate} from 'react-native-reanimated';
 import {globalStyle} from '../../styles/globalStyles';
 import {homeStyles} from '../../styles/homeStyles';
 import SimCard from '../../components/SimCard';
+import {getCartDetails, getEsims} from '../../store/main/mainThunk';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Home = ({navigation}) => {
+  const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState('local');
+  const [globalEsims, setGlobalEsims] = useState([]);
+  const {cart} = useSelector(state => state.main);
+  console.log(cart);
   const regionalData = [
     {title: 'Africa', image: africaMap},
     {title: 'United States', image: usMap},
@@ -45,13 +51,12 @@ const Home = ({navigation}) => {
     {title: 'United Kingdom', image: ukMap},
   ];
   const localData = [
-    {title: 'Pakistan', image: pakFlag},
-    {title: 'United States', image: usFlag},
-    {title: 'Africa', image: africaFlag},
-    {title: 'Dubai', image: dubaiFlag},
-    {title: 'United Kingdom', image: ukFlag},
+    {title: 'Pakistan', image: pakFlag, countryCode: 'PK'},
+    {title: 'United States', image: usFlag, countryCode: 'US'},
+    {title: 'South Africa', image: africaFlag, countryCode: 'ZA'},
+    {title: 'Dubai', image: dubaiFlag, countryCode: 'AE'},
+    {title: 'United Kingdom', image: ukFlag, countryCode: 'GB'},
   ];
-
   const getTabStyle = tabName => ({
     backgroundColor:
       activeTab === tabName ? globalColors.grey : globalColors.textColor,
@@ -59,18 +64,59 @@ const Home = ({navigation}) => {
   const handleTabs = tabName => {
     setActiveTab(tabName);
   };
+  const getGlobalEsims = async () => {
+    try {
+      const body = {
+        locationCode: '!GL',
+        type: '',
+        slug: '',
+        packageCode: '',
+        iccid: '',
+      };
+      const res = await dispatch(getEsims(body)).unwrap();
+      setGlobalEsims(res.data.packageList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const getCart = async () => {
+    try {
+      await dispatch(getCartDetails());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getGlobalEsims();
+    getCart();
+  }, []);
   return (
     <View
       style={[
         globalStyle.container,
-        {backgroundColor: globalColors.textColor},
+
+        {
+          backgroundColor: globalColors.textColor,
+        },
       ]}>
       <StatusBar
         backgroundColor={globalColors.textColor}
         barStyle={'dark-content'}
       />
-      <View style={homeStyles.header}>
-        <Text style={homeStyles.headerText}>HELLO</Text>
+      <View style={[homeStyles.header]}>
+        <View style={homeStyles.headerFirstSection}>
+          <Text style={homeStyles.headerText}>HELLO</Text>
+          <Pressable onPress={() => navigation.navigate('Cart')}>
+            <Ionicons
+              name="cart-outline"
+              size={25}
+              color={globalColors.black}
+            />
+            {cart?.items?.length > 0 && <View style={homeStyles.cartDot} />}
+          </Pressable>
+        </View>
+
         <View style={homeStyles.inputContainer}>
           <TextInput
             style={homeStyles.input}
@@ -118,13 +164,16 @@ const Home = ({navigation}) => {
         <ScrollView
           style={homeStyles.globalContainer}
           showsVerticalScrollIndicator={false}>
-          {[0, 0, 0].map((item, index) => (
+          {globalEsims.map((item, index) => (
             <View
               key={index}
               style={{
-                marginBottom: index === 2 ? height * 0.13 : height * 0.01,
+                marginBottom:
+                  index === globalEsims.length - 1
+                    ? height * 0.13
+                    : height * 0.01,
               }}>
-              <SimCard index={index} item={item} />
+              <SimCard index={index} item={{...item, coverage: 'Global'}} />
             </View>
           ))}
         </ScrollView>

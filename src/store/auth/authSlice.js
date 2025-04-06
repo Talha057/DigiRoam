@@ -20,7 +20,8 @@ const authSlice = createSlice({
     });
     builder.addCase(login.fulfilled, (state, action) => {
       state.loading = false;
-      state.user = action.payload;
+      state.user = action.payload.data.user;
+      state.token = action.payload.data.accessToken;
     });
     builder.addCase(login.rejected, (state, action) => {
       state.loading = false;

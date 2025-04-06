@@ -14,10 +14,19 @@ import {
   simIcon3,
   simIcon4,
 } from '../../assets/images';
-import {height} from '../../utils';
+import {formatDataSize, height} from '../../utils';
+import {useDispatch, useSelector} from 'react-redux';
+import {scaleValue} from '../../constants/Sizes';
+import {addToCart} from '../../store/main/mainSlice';
 
 const SimDetails = ({route}) => {
-  const {item} = route.params;
+  const {sim} = route.params;
+  const dispatch = useDispatch();
+  const {loading, cart} = useSelector(state => state.main);
+  console.log('cart', cart);
+  const handleCart = () => {
+    dispatch(addToCart(sim));
+  };
   return (
     <View style={globalStyle.container}>
       <StatusBar
@@ -25,7 +34,7 @@ const SimDetails = ({route}) => {
         barStyle={'light-content'}
       />
       <Header
-        title={item.title}
+        title={'Details'}
         textStyle={simDetailsStyle.headerText}
         backgroundColor={globalColors.backgroundColor}
         arrowColor={globalColors.textColor}
@@ -47,28 +56,34 @@ const SimDetails = ({route}) => {
                 <Image source={simIcon1} style={homeStyles.simIcon} />
                 <Text style={homeStyles.simLabel}>COVERAGE</Text>
               </View>
-              <Text style={homeStyles.simValue}>UNITED STATES</Text>
+              <Text style={homeStyles.simValue}>{sim?.name}</Text>
             </View>
             <View style={simDetailsStyle.simTextContainer}>
               <View style={homeStyles.simIconContainer}>
                 <Image source={simIcon2} style={homeStyles.simIcon} />
                 <Text style={homeStyles.simLabel}>DATA</Text>
               </View>
-              <Text style={homeStyles.simValue}>2 GB</Text>
+              <Text style={homeStyles.simValue}>
+                {formatDataSize(sim?.volume)}
+              </Text>
             </View>
             <View style={simDetailsStyle.simTextContainer}>
               <View style={homeStyles.simIconContainer}>
                 <Image source={simIcon3} style={homeStyles.simIcon} />
                 <Text style={homeStyles.simLabel}>VALIDITY</Text>
               </View>
-              <Text style={homeStyles.simValue}>7 DAYS</Text>
+              <Text style={homeStyles.simValue}>
+                {sim?.duration} {sim?.durationUnit}
+              </Text>
             </View>
             <View style={simDetailsStyle.simTextContainer}>
               <View style={homeStyles.simIconContainer}>
                 <Image source={simIcon4} style={homeStyles.simIcon} />
                 <Text style={homeStyles.simLabel}>PRICE</Text>
               </View>
-              <Text style={homeStyles.simValue}>$ 4.0 USD</Text>
+              <Text style={homeStyles.simValue}>
+                ${sim?.price} {sim?.currencyCode}
+              </Text>
             </View>
           </View>
         </View>
@@ -80,18 +95,18 @@ const SimDetails = ({route}) => {
             <View style={simDetailsStyle.additionalItems}>
               <Image source={simIcon2} style={simDetailsStyle.simIcon} />
               <View style={globalStyle.flexShrink}>
-                <Text style={simDetailsStyle.additionalHeading}>Network</Text>
+                <Text style={simDetailsStyle.additionalHeading}>Speed</Text>
                 <Text style={simDetailsStyle.additionalDescription}>
-                  DOCOMO
+                  {sim?.speed}
                 </Text>
               </View>
             </View>
             <View style={simDetailsStyle.additionalItems}>
               <Image source={simIcon3} style={simDetailsStyle.simIcon} />
               <View style={globalStyle.flexShrink}>
-                <Text style={simDetailsStyle.additionalHeading}>Plan Type</Text>
+                <Text style={simDetailsStyle.additionalHeading}>Slug</Text>
                 <Text style={simDetailsStyle.additionalDescription}>
-                  DATA ONLY
+                  {sim?.slug}
                 </Text>
               </View>
             </View>
@@ -114,7 +129,7 @@ const SimDetails = ({route}) => {
                   OTHER INFO
                 </Text>
                 <Text style={simDetailsStyle.additionalDescription}>
-                  RESTRICTIONS APPLY TO EXTENDED USAGE (OVER 91 DAYS) IN TURKEY
+                  RESTRICTIONS APPLY TO EXTENDED USAGE ({sim?.unusedValidTime})
                   ACCORDING TO LOCAL LEGISLATION.
                 </Text>
               </View>
@@ -123,11 +138,17 @@ const SimDetails = ({route}) => {
         </View>
       </ScrollView>
       <View style={simDetailsStyle.footer}>
-        <Text style={simDetailsStyle.priceText}>$9.00 USD</Text>
+        <Text style={simDetailsStyle.priceText}>
+          ${sim?.price} {sim?.currencyCode}
+        </Text>
         <Button
-          title={'Buy Now'}
+          title={'Add to Cart'}
           btnStyle={simDetailsStyle.btnStyle}
           textStyle={simDetailsStyle.btnText}
+          loading={loading}
+          loaderColor={globalColors.black}
+          loaderSize={scaleValue(12)}
+          onPress={handleCart}
         />
       </View>
     </View>

@@ -10,11 +10,27 @@ export const homeStyles = StyleSheet.create({
     width: width * 0.92,
     alignSelf: 'center',
   },
+  headerFirstSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   headerText: {
     color: globalColors.black,
     fontSize: scaleXValue(20),
     letterSpacing: 5,
     fontFamily: 'Montserrat-Bold',
+  },
+  cartDot: {
+    borderWidth: 1,
+    borderColor: globalColors.backgroundColor,
+    height: 8,
+    width: 8,
+    borderRadius: 8,
+    backgroundColor: globalColors.backgroundColor,
+    position: 'absolute',
+    top: -2,
+    left: -2,
   },
   inputContainer: {
     backgroundColor: globalColors.backgroundColor,
@@ -86,6 +102,7 @@ export const homeStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: '4%',
+    gap: 5,
     borderBottomWidth: 0.5,
     borderBottomColor: '#fff',
   },
@@ -107,6 +124,9 @@ export const homeStyles = StyleSheet.create({
     color: globalColors.textColor,
     fontFamily: 'Montserrat-SemiBold',
     fontSize: scaleXValue(15),
+    textTransform: 'uppercase',
+    flexShrink: 1,
+    textAlign: 'right',
   },
 
   // Regional  & Local Esims styles

@@ -10,14 +10,12 @@ import {
   simIcon4,
 } from '../assets/images';
 import {useNavigation} from '@react-navigation/native';
-
-const SimCard = ({index, item}) => {
+import {formatDataSize} from '../utils';
+const SimCard = ({item}) => {
   const navigation = useNavigation();
+
   return (
-    <Pressable
-      onPress={() =>
-        navigation.navigate('SimDetails', {item: {title: 'Discover'}})
-      }>
+    <Pressable onPress={() => navigation.navigate('SimDetails', {sim: item})}>
       <ImageBackground
         source={bannerBg}
         imageStyle={{
@@ -35,28 +33,34 @@ const SimCard = ({index, item}) => {
               <Image source={simIcon1} style={homeStyles.simIcon} />
               <Text style={homeStyles.simLabel}>COVERAGE</Text>
             </View>
-            <Text style={homeStyles.simValue}>UNITED STATES</Text>
+            <Text style={homeStyles.simValue}>{item?.name}</Text>
           </View>
           <View style={homeStyles.simTextContainer}>
             <View style={homeStyles.simIconContainer}>
               <Image source={simIcon2} style={homeStyles.simIcon} />
               <Text style={homeStyles.simLabel}>DATA</Text>
             </View>
-            <Text style={homeStyles.simValue}>2 GB</Text>
+            <Text style={homeStyles.simValue}>
+              {formatDataSize(item?.volume)}
+            </Text>
           </View>
           <View style={homeStyles.simTextContainer}>
             <View style={homeStyles.simIconContainer}>
               <Image source={simIcon3} style={homeStyles.simIcon} />
               <Text style={homeStyles.simLabel}>VALIDITY</Text>
             </View>
-            <Text style={homeStyles.simValue}>7 DAYS</Text>
+            <Text style={homeStyles.simValue}>
+              {item?.duration} {item?.durationUnit}
+            </Text>
           </View>
           <View style={homeStyles.simTextContainer}>
             <View style={homeStyles.simIconContainer}>
               <Image source={simIcon4} style={homeStyles.simIcon} />
               <Text style={homeStyles.simLabel}>PRICE</Text>
             </View>
-            <Text style={homeStyles.simValue}>$ 4.0 USD</Text>
+            <Text style={homeStyles.simValue}>
+              ${item?.price} {item?.currencyCode}
+            </Text>
           </View>
           <View style={homeStyles.btnContainer}>
             <View style={homeStyles.btn}>

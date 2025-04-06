@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: '4%',
   },
   textStyle: {
-    fontFamily: 'Montserrat-Light',
+    fontFamily: 'Montserrat-Medium',
     fontSize: 16,
     textAlign: 'center',
     right: width * 0.02,
