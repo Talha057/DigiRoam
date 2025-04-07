@@ -1,4 +1,11 @@
-import {Image, ScrollView, StatusBar, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {globalStyle} from '../../styles/globalStyles';
 import Header from '../../components/Header';
 import {simDetailsStyle} from '../../styles/simDetailsStyle';
@@ -17,15 +24,27 @@ import {
 import {formatDataSize, height} from '../../utils';
 import {useDispatch, useSelector} from 'react-redux';
 import {scaleValue} from '../../constants/Sizes';
-import {addToCart} from '../../store/main/mainSlice';
-
+import {addToCart} from '../../store/main/mainThunk';
+import Toast from 'react-native-simple-toast';
 const SimDetails = ({route}) => {
   const {sim} = route.params;
   const dispatch = useDispatch();
   const {loading, cart} = useSelector(state => state.main);
   console.log('cart', cart);
-  const handleCart = () => {
-    dispatch(addToCart(sim));
+  const handleCart = async () => {
+    const data = {
+      productId: sim.packageCode,
+      productName: sim.name,
+      productPrice: sim.price,
+      productQuantity: 1,
+    };
+    try {
+      const res = await dispatch(addToCart(data)).unwrap();
+      console.log('ress', res);
+      Toast.show('Sim added to cart');
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <View style={globalStyle.container}>
@@ -141,6 +160,23 @@ const SimDetails = ({route}) => {
         <Text style={simDetailsStyle.priceText}>
           ${sim?.price} {sim?.currencyCode}
         </Text>
+        <View style={{flexDirection: 'row', gap: 10}}>
+          <Pressable
+            style={{
+              paddingHorizontal: 10,
+              borderRadius: 5,
+              borderWidth: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text style={{fontSize: 20}}>-</Text>
+          </Pressable>
+          <Text style={{fontSize: 20}}>1</Text>
+          <Pressable
+            style={{paddingHorizontal: 10, borderRadius: 5, borderWidth: 1}}>
+            <Text style={{fontSize: 18}}>+</Text>
+          </Pressable>
+        </View>
         <Button
           title={'Add to Cart'}
           btnStyle={simDetailsStyle.btnStyle}

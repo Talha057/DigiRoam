@@ -35,3 +35,35 @@ export const getCartDetails = createAsyncThunk(
     }
   },
 );
+export const addToCart = createAsyncThunk(
+  'main/addToCart',
+  async (data, {rejectWithValue, getState}) => {
+    try {
+      const token = getState().auth;
+      const res = await apiManager.post('/cart/addToCart', data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      return throwError(error, rejectWithValue);
+    }
+  },
+);
+export const removeFromCart = createAsyncThunk(
+  'main/removeFromCart',
+  async (data, {rejectWithValue, getState}) => {
+    try {
+      const token = getState().auth;
+      const res = await apiManager.post('/cart/removeFromCart', data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      return throwError(error, rejectWithValue);
+    }
+  },
+);

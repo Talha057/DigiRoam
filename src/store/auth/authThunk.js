@@ -1,5 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {apiManager} from '../../api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const throwError = (err, rejectWithValue) => {
   console.log(err);
   if (err.response && err.response.data && err.response.data.message) {
@@ -13,6 +14,7 @@ export const login = createAsyncThunk(
   async (data, {rejectWithValue}) => {
     try {
       const res = await apiManager.post('/user/login', data);
+      AsyncStorage.setItem('token', JSON.stringify(res.data.data.accessToken));
       return res.data;
     } catch (error) {
       return throwError(error, rejectWithValue);
