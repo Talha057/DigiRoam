@@ -27,28 +27,34 @@ import {
   africaFlag,
   dubaiFlag,
   ukFlag,
-  bannerBg,
-  simBanner,
 } from '../../assets/images';
-import {interpolate} from 'react-native-reanimated';
 import {globalStyle} from '../../styles/globalStyles';
 import {homeStyles} from '../../styles/homeStyles';
 import SimCard from '../../components/SimCard';
-import {getCartDetails, getEsims} from '../../store/main/mainThunk';
+import {
+  getCartDetails,
+  getEsims,
+  verifyUserToken,
+} from '../../store/main/mainThunk';
 import {useDispatch, useSelector} from 'react-redux';
+import {getMyProfile} from '../../store/auth/authThunk';
+import AppModal from '../../components/AppModal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {setToken} from '../../store/auth/authSlice';
 
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState('local');
   const [globalEsims, setGlobalEsims] = useState([]);
+  const [isSessionExpired, setIsSessionExpired] = useState(false);
   const {cart} = useSelector(state => state.main);
-  console.log(cart);
+  const {token} = useSelector(state => state.auth);
   const regionalData = [
-    {title: 'Africa', image: africaMap},
-    {title: 'United States', image: usMap},
-    {title: 'Pakistan', image: pakMap},
-    {title: 'Dubai', image: dubaiMap},
-    {title: 'United Kingdom', image: ukMap},
+    {title: 'Africa', image: africaMap, countryCode: '!RG'},
+    {title: 'United States', image: usMap, countryCode: '!RG'},
+    {title: 'Pakistan', image: pakMap, countryCode: '!RG'},
+    {title: 'Dubai', image: dubaiMap, countryCode: '!RG'},
+    {title: 'United Kingdom', image: ukMap, countryCode: '!RG'},
   ];
   const localData = [
     {title: 'Pakistan', image: pakFlag, countryCode: 'PK'},
@@ -81,15 +87,39 @@ const Home = ({navigation}) => {
   };
   const getCart = async () => {
     try {
-      await dispatch(getCartDetails());
+      await dispatch(getCartDetails()).unwrap();
     } catch (err) {
       console.log(err);
     }
   };
+  const getProfile = async () => {
+    try {
+      await dispatch(getMyProfile()).unwrap();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const verifyToken = async () => {
+    try {
+      const res = await dispatch(verifyUserToken()).unwrap();
+      console.log(res);
+    } catch (err) {
+      setIsSessionExpired(true);
+      console.log(err);
+    }
+  };
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('token');
+    dispatch(setToken(null));
+  };
 
   useEffect(() => {
+    getProfile();
     getGlobalEsims();
     getCart();
+    if (token) {
+      verifyToken();
+    }
   }, []);
   return (
     <View
@@ -106,18 +136,25 @@ const Home = ({navigation}) => {
       />
       <View style={[homeStyles.header]}>
         <View style={homeStyles.headerFirstSection}>
-          <Text style={homeStyles.headerText}>HELLO</Text>
-          <Pressable onPress={() => navigation.navigate('Cart')}>
-            <Ionicons
-              name="cart-outline"
-              size={25}
-              color={globalColors.black}
-            />
-            {cart?.items?.length > 0 && <View style={homeStyles.cartDot} />}
-          </Pressable>
+          {/* <Text style={homeStyles.headerText}>HOME</Text> */}
+          <Image
+            source={require('../../assets/images/auth/roam-digi-logo.png')}
+            style={{width: width * 0.3, height: height * 0.03, top: -5}}
+            resizeMode="stretch"
+          />
+          {token && (
+            <Pressable onPress={() => navigation.navigate('Cart')}>
+              <Ionicons
+                name="cart-outline"
+                size={25}
+                color={globalColors.black}
+              />
+              {cart?.items?.length > 0 && <View style={homeStyles.cartDot} />}
+            </Pressable>
+          )}
         </View>
 
-        <View style={homeStyles.inputContainer}>
+        {/* <View style={homeStyles.inputContainer}>
           <TextInput
             style={homeStyles.input}
             placeholder="Search your country"
@@ -128,7 +165,7 @@ const Home = ({navigation}) => {
             size={20}
             color={globalColors.textColor}
           />
-        </View>
+        </View> */}
         <View style={homeStyles.tabContainer}>
           <Pressable
             style={[
@@ -161,22 +198,25 @@ const Home = ({navigation}) => {
       </View>
 
       {activeTab === 'global' ? (
-        <ScrollView
-          style={homeStyles.globalContainer}
-          showsVerticalScrollIndicator={false}>
-          {globalEsims.map((item, index) => (
+        <FlatList
+          data={globalEsims}
+          initialNumToRender={1}
+          maxToRenderPerBatch={2}
+          keyExtractor={(item, index) => index.toString()}
+          contentContainerStyle={homeStyles.globalContainer}
+          renderItem={({item, index}) => (
             <View
-              key={index}
               style={{
                 marginBottom:
                   index === globalEsims.length - 1
-                    ? height * 0.13
+                    ? height * 0.05
                     : height * 0.01,
               }}>
               <SimCard index={index} item={{...item, coverage: 'Global'}} />
             </View>
-          ))}
-        </ScrollView>
+          )}
+          showsVerticalScrollIndicator={false}
+        />
       ) : (
         <ScrollView
           style={homeStyles.localContainer}
@@ -211,6 +251,14 @@ const Home = ({navigation}) => {
           />
         </ScrollView>
       )}
+      <AppModal
+        visible={isSessionExpired}
+        title="Session Expired"
+        description="Your session has expired, Please login again."
+        confirmText="Login"
+        onClose={() => setIsSessionExpired(false)}
+        onConfirm={handleLogout}
+      />
     </View>
   );
 };

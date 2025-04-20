@@ -13,10 +13,12 @@ import {width} from '../../utils';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {getEsims} from '../../store/main/mainThunk';
+import {Text} from 'react-native';
+import {FlatList} from 'react-native';
 
 const AllSims = ({route}) => {
   const [allEsims, setAllEsims] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const {item} = route.params;
   useEffect(() => {
@@ -24,6 +26,7 @@ const AllSims = ({route}) => {
   }, []);
   const getAllEsims = async () => {
     try {
+      setLoading(true);
       const body = {
         locationCode: item.countryCode,
         type: '',
@@ -33,9 +36,10 @@ const AllSims = ({route}) => {
       };
       const res = await dispatch(getEsims(body)).unwrap();
       setAllEsims(res.data.packageList);
-      setLoading(false);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -46,15 +50,20 @@ const AllSims = ({route}) => {
         textStyle={styles.headerText}
         arrowColor={globalColors.black}
       />
-      <ScrollView style={styles.container}>
+      <View style={{flex: 1, backgroundColor: globalColors.textColor}}>
         {loading ? (
-          <ActivityIndicator size={20} color={'orange'} />
+          <ActivityIndicator size={20} color={globalColors.backgroundColor} />
         ) : (
-          allEsims.map((item, index) => (
-            <SimCard index={index} item={item} key={index} />
-          ))
+          <FlatList
+            data={allEsims}
+            initialNumToRender={1}
+            maxToRenderPerBatch={2}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({item}) => <SimCard item={item} />}
+            contentContainerStyle={styles.container}
+          />
         )}
-      </ScrollView>
+      </View>
     </View>
   );
 };
@@ -66,5 +75,6 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 18,
+    fontFamily: 'Montserrat-Medium',
   },
 });

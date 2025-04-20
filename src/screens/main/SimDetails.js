@@ -26,24 +26,57 @@ import {useDispatch, useSelector} from 'react-redux';
 import {scaleValue} from '../../constants/Sizes';
 import {addToCart} from '../../store/main/mainThunk';
 import Toast from 'react-native-simple-toast';
+import {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {setInstantBuyItem} from '../../store/main/mainSlice';
+import LoginSignupPromptModal from '../../components/LoginPromptModal';
+import AppModal from '../../components/AppModal';
 const SimDetails = ({route}) => {
   const {sim} = route.params;
+  const {token} = useSelector(state => state.auth);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const {loading, cart} = useSelector(state => state.main);
-  console.log('cart', cart);
+  const [showModal, setShowModal] = useState(false);
+  const [quantity, setQuantity] = useState(1);
   const handleCart = async () => {
-    const data = {
-      productId: sim.packageCode,
-      productName: sim.name,
-      productPrice: sim.price,
-      productQuantity: 1,
-    };
-    try {
-      const res = await dispatch(addToCart(data)).unwrap();
-      console.log('ress', res);
-      Toast.show('Sim added to cart');
-    } catch (err) {
-      console.log(err);
+    if (token) {
+      const data = {
+        productId: sim.packageCode,
+        productName: sim.name,
+        productPrice: sim.price,
+        productQuantity: 1,
+      };
+      try {
+        const res = await dispatch(addToCart(data)).unwrap();
+        console.log('ress', res);
+        Toast.show('Sim added to cart');
+        navigation.navigate('Cart');
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      setShowModal(true);
+    }
+  };
+  const handleBuyNow = async () => {
+    if (token) {
+      const item = {
+        productId: sim.packageCode,
+        productName: sim.name,
+        productPrice: sim.price,
+        productQuantity: 1,
+        _id: sim._id,
+      };
+      console.log(item);
+      try {
+        dispatch(setInstantBuyItem(item));
+        navigation.navigate('Cart', {buyNow: true});
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      setShowModal(true);
     }
   };
   return (
@@ -160,31 +193,54 @@ const SimDetails = ({route}) => {
         <Text style={simDetailsStyle.priceText}>
           ${sim?.price} {sim?.currencyCode}
         </Text>
-        <View style={{flexDirection: 'row', gap: 10}}>
+        {/* <View style={{flexDirection: 'row', gap: 10}}>
           <Pressable
-            style={{
-              paddingHorizontal: 10,
-              borderRadius: 5,
-              borderWidth: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
+            style={simDetailsStyle.quantityContainer}
+            onPress={() => {
+              if (quantity > 1) setQuantity(prev => prev - 1);
             }}>
-            <Text style={{fontSize: 20}}>-</Text>
+            <Text style={simDetailsStyle.quantityText}>-</Text>
           </Pressable>
-          <Text style={{fontSize: 20}}>1</Text>
+          <Text style={simDetailsStyle.quantityText}>{quantity}</Text>
           <Pressable
-            style={{paddingHorizontal: 10, borderRadius: 5, borderWidth: 1}}>
-            <Text style={{fontSize: 18}}>+</Text>
+            style={simDetailsStyle.quantityContainer}
+            onPress={() => {
+              if (quantity < 50) setQuantity(prev => prev + 1);
+            }}>
+            <Text style={[simDetailsStyle.quantityText, {fontSize: 16}]}>
+              +
+            </Text>
           </Pressable>
+        </View> */}
+        <View style={simDetailsStyle.btnContainer}>
+          <Button
+            title={'Add to Cart'}
+            btnStyle={simDetailsStyle.btnStyle}
+            textStyle={simDetailsStyle.btnText}
+            loading={loading}
+            loaderColor={globalColors.black}
+            loaderSize={scaleValue(12)}
+            onPress={handleCart}
+          />
+          <Button
+            title={'Buy Now'}
+            btnStyle={simDetailsStyle.btnStyle}
+            textStyle={simDetailsStyle.btnText}
+            loading={loading}
+            loaderColor={globalColors.black}
+            loaderSize={scaleValue(12)}
+            onPress={handleBuyNow}
+          />
         </View>
-        <Button
-          title={'Add to Cart'}
-          btnStyle={simDetailsStyle.btnStyle}
-          textStyle={simDetailsStyle.btnText}
-          loading={loading}
-          loaderColor={globalColors.black}
-          loaderSize={scaleValue(12)}
-          onPress={handleCart}
+        <AppModal
+          visible={showModal}
+          title="Login Required"
+          description="You need to login or signup to continue"
+          confirmText="Login"
+          cancelText="Cancel"
+          showCancel
+          onClose={() => setShowModal(false)}
+          onConfirm={() => navigation.navigate('Login')}
         />
       </View>
     </View>

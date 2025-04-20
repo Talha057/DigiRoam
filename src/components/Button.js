@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {scaleValue, scaleXValue} from '../constants/Sizes';
+import {View} from 'react-native';
 
 const Button = ({
   btnStyle,
@@ -14,6 +15,7 @@ const Button = ({
   loaderColor,
   loaderSize,
   title,
+  icon,
 }) => {
   return (
     <TouchableOpacity
@@ -24,7 +26,10 @@ const Button = ({
       {loading ? (
         <ActivityIndicator size={loaderSize} color={loaderColor} />
       ) : (
-        <Text style={[styles.textStyle, textStyle]}>{title}</Text>
+        <View style={styles.textContainer}>
+          {icon && icon}
+          <Text style={[styles.textStyle, textStyle]}>{title}</Text>
+        </View>
       )}
     </TouchableOpacity>
   );
@@ -36,6 +41,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  textContainer: {flexDirection: 'row', gap: 5, alignItems: 'center'},
   textStyle: {
     fontSize: scaleXValue(20),
     fontFamily: 'Montserrat-ExtraBold',

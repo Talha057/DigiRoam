@@ -22,7 +22,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-function MyTabBar({state, descriptors, navigation}) {
+function MyTabBar({state, descriptors, navigation, token}) {
   const [barDimensions, setBarDimensions] = useState({
     height: 20,
     width: 100,
@@ -102,7 +102,7 @@ function MyTabBar({state, descriptors, navigation}) {
     <Animated.View
       onLayout={onTabbarLayout}
       style={[styles.tabBar, keyboardStyle]}>
-      <Animated.View style={tabStyle} />
+      {token && <Animated.View style={tabStyle} />}
       {state.routes.map((route, index) => {
         const {options} = descriptors[route.key];
         const label =
@@ -112,7 +112,7 @@ function MyTabBar({state, descriptors, navigation}) {
             ? options.title
             : route.name;
 
-        const isFocused = state.index === index;
+        const isFocused = token ? state.index === index : false;
 
         const onPress = () => {
           const event = navigation.emit({

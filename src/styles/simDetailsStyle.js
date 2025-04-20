@@ -57,10 +57,11 @@ export const simDetailsStyle = StyleSheet.create({
     fontFamily: 'Montserrat-Medium',
     fontSize: 14,
   },
+  btnContainer: {flexDirection: 'row', alignItems: 'center', gap: width * 0.02},
   btnStyle: {
     backgroundColor: globalColors.textColor,
     paddingVertical: height * 0.01,
-    paddingHorizontal: width * 0.1,
+    paddingHorizontal: width * 0.03,
     borderRadius: 5,
   },
   btnText: {
@@ -78,6 +79,19 @@ export const simDetailsStyle = StyleSheet.create({
     // backgroundColor: '#636363',
     backgroundColor: globalColors.backgroundColor,
     paddingVertical: height * 0.015,
+  },
+  quantityContainer: {
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: globalColors.textColor,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  quantityText: {
+    fontSize: 20,
+    color: globalColors.textColor,
+    fontFamily: 'Montserrat-Medium',
   },
   priceText: {
     fontFamily: 'Montserrat-Bold',

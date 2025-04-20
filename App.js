@@ -38,7 +38,7 @@ const AppEntry = () => {
         backgroundColor={globalColors.backgroundColor}
         barStyle={'light-content'}
       />
-      {token ? <MainStack /> : <AuthStack />}
+      <MainStack />
     </NavigationContainer>
   );
 };

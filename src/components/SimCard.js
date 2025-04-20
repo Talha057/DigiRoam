@@ -1,3 +1,4 @@
+import React from 'react';
 import {View, Text, Image, ImageBackground, Pressable} from 'react-native';
 import {homeStyles} from '../styles/homeStyles';
 import {height} from '../utils';
@@ -72,4 +73,4 @@ const SimCard = ({item}) => {
     </Pressable>
   );
 };
-export default SimCard;
+export default React.memo(SimCard);

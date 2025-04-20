@@ -9,6 +9,7 @@ import {forgotPassword} from '../../store/auth/authThunk';
 import {useState} from 'react';
 import Toast from 'react-native-simple-toast';
 import {scaleValue} from '../../constants/Sizes';
+import {color} from 'react-native-elements/dist/helpers';
 
 const ForgotPassword = ({navigation}) => {
   const dispatch = useDispatch();
@@ -26,16 +27,17 @@ const ForgotPassword = ({navigation}) => {
     <View
       style={[
         globalStyle.container,
-        {backgroundColor: globalColors.textColor},
+        {backgroundColor: globalColors.backgroundColor},
       ]}>
       <StatusBar
-        backgroundColor={globalColors.textColor}
-        barStyle={'dark-content'}
+        backgroundColor={globalColors.backgroundColor}
+        barStyle={'light-content'}
       />
       <Header
         title={'FORGET PASSWORD'}
-        backgroundColor={globalColors.textColor}
-        arrowColor={globalColors.black}
+        backgroundColor={globalColors.backgroundColor}
+        arrowColor={globalColors.textColor}
+        textStyle={{color: globalColors.textColor}}
       />
       <View style={forgotPassStyles.secondContainer}>
         <Text style={forgotPassStyles.heading}>Forget Password</Text>
@@ -47,6 +49,7 @@ const ForgotPassword = ({navigation}) => {
           placeholder="Email"
           style={forgotPassStyles.textInput}
           value={email}
+          placeholderTextColor={globalColors.textColor}
           onChangeText={setEmail}
         />
         <Button
@@ -54,7 +57,7 @@ const ForgotPassword = ({navigation}) => {
           title={'Send'}
           loading={loading}
           loaderSize={scaleValue(25)}
-          loaderColor={globalColors.textColor}
+          loaderColor={globalColors.backgroundColor}
           textStyle={forgotPassStyles.btnText}
           btnStyle={forgotPassStyles.btnStyle}
         />

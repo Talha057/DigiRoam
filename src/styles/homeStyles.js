@@ -10,10 +10,12 @@ export const homeStyles = StyleSheet.create({
     width: width * 0.92,
     alignSelf: 'center',
   },
+
   headerFirstSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    // alignItems: 'center',
+    height: height * 0.06,
   },
   headerText: {
     color: globalColors.black,
@@ -71,7 +73,6 @@ export const homeStyles = StyleSheet.create({
   // Global Esims styles
   globalContainer: {
     backgroundColor: globalColors.grey,
-    flex: 2,
     paddingHorizontal: width * 0.05,
     paddingVertical: height * 0.04,
   },

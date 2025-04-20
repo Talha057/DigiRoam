@@ -35,7 +35,10 @@ const Login = ({navigation}) => {
     try {
       const response = await dispatch(login(data)).unwrap();
       Toast.show(response.message);
-      // dispatch(setToken('abc'));
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Home'}],
+      });
     } catch (err) {
       console.log(err);
       Toast.show(err);

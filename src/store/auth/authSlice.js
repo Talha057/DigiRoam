@@ -1,5 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {forgotPassword, login, resetOtp, signup, verifyOtp} from './authThunk';
+import {
+  forgotPassword,
+  getMyProfile,
+  login,
+  resetOtp,
+  signup,
+  verifyOtp,
+} from './authThunk';
 
 const INITIAL_STATE = {
   user: null,
@@ -61,6 +68,10 @@ const authSlice = createSlice({
     });
     builder.addCase(resetOtp.rejected, (state, action) => {
       state.loading = false;
+    });
+    builder.addCase(getMyProfile.fulfilled, (state, action) => {
+      state.loading = false;
+      state.user = action.payload.data.user;
     });
   },
 });
