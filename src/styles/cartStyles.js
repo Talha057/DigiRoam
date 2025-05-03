@@ -59,11 +59,17 @@ export const cartStyles = StyleSheet.create({
     color: globalColors.black,
     fontFamily: 'Montserrat-Medium',
   },
-  btnContainer: {flexDirection: 'row', alignItems: 'center', gap: width * 0.02},
+  btnContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: width * 0.02,
+    justifyContent: 'flex-end',
+  },
   btnStyle: {
     backgroundColor: globalColors.textColor,
     paddingVertical: height * 0.01,
     paddingHorizontal: width * 0.03,
+    width: width * 0.3,
     borderRadius: 5,
     backgroundColor: globalColors.violet,
   },

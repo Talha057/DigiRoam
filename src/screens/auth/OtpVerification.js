@@ -37,6 +37,7 @@ const OtpVerification = ({route, navigation}) => {
           ? await dispatch(verifyOtp(data)).unwrap()
           : await dispatch(resetOtp(data)).unwrap();
       Toast.show(response.data.message || response.message);
+
       navigation.replace('Login');
     } catch (err) {
       Toast.show(err);

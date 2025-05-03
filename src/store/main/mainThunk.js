@@ -50,6 +50,23 @@ export const addToCart = createAsyncThunk(
     }
   },
 );
+export const addToBuyNow = createAsyncThunk(
+  'main/addToBuyNow',
+  async (data, {rejectWithValue, getState}) => {
+    try {
+      const {token} = getState().auth;
+      const res = await apiManager.post('/buynow/', data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return throwError(error, rejectWithValue);
+    }
+  },
+);
 export const removeFromCart = createAsyncThunk(
   'main/removeFromCart',
   async (data, {rejectWithValue, getState}) => {
@@ -129,6 +146,120 @@ export const verifyUserToken = createAsyncThunk(
           },
         },
       );
+      return res.data;
+    } catch (err) {
+      console.log(err.response);
+      if (err.response && err.response.data && err.response.data.message) {
+        return rejectWithValue({
+          message: err.response.data.message,
+          code: err.response.status || null,
+        });
+      }
+      return rejectWithValue({
+        message: 'Network Error. Please try again.',
+        code: err.response.status || null,
+      });
+    }
+  },
+);
+export const createOrderId = createAsyncThunk(
+  'main/createOrderId',
+  async (data, {rejectWithValue, getState}) => {
+    try {
+      const {token} = getState().auth;
+      const res = await apiManager.post(
+        '/payment/paypal/generateOrderId/native',
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return res.data;
+    } catch (error) {
+      return throwError(error, rejectWithValue);
+    }
+  },
+);
+
+export const orderProfile = createAsyncThunk(
+  'main/orderProfile',
+  async (data, {rejectWithValue, getState}) => {
+    try {
+      const {token} = getState().auth;
+      const res = await apiManager.post('/eSim/orderProfiles', data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      return throwError(error, rejectWithValue);
+    }
+  },
+);
+export const savePayment = createAsyncThunk(
+  'main/savePayment',
+  async (data, {rejectWithValue, getState}) => {
+    try {
+      const {token} = getState().auth;
+      const res = await apiManager.post('/paymentSave/store', data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      return throwError(error, rejectWithValue);
+    }
+  },
+);
+export const createPaymentIntent = createAsyncThunk(
+  'main/createPaymentIntent',
+  async (data, {rejectWithValue, getState}) => {
+    try {
+      const {token} = getState().auth;
+      const res = await apiManager.post(
+        '/payment/stripe/stripePaymentIntent/native',
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return res.data;
+    } catch (error) {
+      return throwError(error, rejectWithValue);
+    }
+  },
+);
+export const clearCart = createAsyncThunk(
+  'main/clearCart',
+  async (data, {rejectWithValue, getState}) => {
+    try {
+      const {token} = getState().auth;
+      const res = await apiManager.post(
+        '/cart/clearCart',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return res.data;
+    } catch (error) {
+      return throwError(error, rejectWithValue);
+    }
+  },
+);
+export const getSettings = createAsyncThunk(
+  'auth/getSettings',
+  async (_, {rejectWithValue}) => {
+    try {
+      const res = await apiManager.get('/settings');
       return res.data;
     } catch (error) {
       return throwError(error, rejectWithValue);

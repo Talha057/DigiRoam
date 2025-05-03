@@ -164,15 +164,15 @@ export default MyTabBar;
 
 const styles = StyleSheet.create({
   tabBar: {
-    position: 'absolute',
-    bottom: 15,
+    // position: 'absolute',
+    // bottom: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: globalColors.backgroundColor,
-    marginHorizontal: width * 0.04,
+    // marginHorizontal: width * 0.04,
     paddingVertical: scaleYValue(10),
-    borderRadius: scaleValue(20),
+    // borderRadius: scaleValue(20),
     shadowColor: '#000',
     shadowOffset: {height: 10, width: 0},
     shadowRadius: 10,

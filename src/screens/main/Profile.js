@@ -80,6 +80,7 @@ const ProfileScreen = () => {
       Toast.show(response.message);
       setIsEditing(false);
     } catch (err) {
+      console.log(err);
       Toast.show(err);
     }
   };

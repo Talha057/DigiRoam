@@ -40,8 +40,10 @@ const Login = ({navigation}) => {
         routes: [{name: 'Home'}],
       });
     } catch (err) {
-      console.log(err);
-      Toast.show(err);
+      if (err.code === 403) {
+        navigation.navigate('OtpVerification', {email, key: 'verify'});
+      }
+      Toast.show(err.message);
     }
   };
   return (

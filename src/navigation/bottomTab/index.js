@@ -13,6 +13,7 @@ import Signup from '../../screens/auth/Signup';
 import ForgotPassword from '../../screens/auth/ForgotPassword';
 import OtpVerification from '../../screens/auth/OtpVerification';
 import {useSelector} from 'react-redux';
+import PayPalWebView from '../../components/PaypalWebView';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const BottomTab = () => {
@@ -43,7 +44,11 @@ const MainStack = () => {
       <Stack.Screen name="AllSims" component={AllSims} />
       <Stack.Screen name="SimDetails" component={SimDetails} />
       <Stack.Screen name="Cart" component={Cart} />
-
+      <Stack.Screen
+        name="PayPalWebView"
+        component={PayPalWebView}
+        options={{headerShown: true, title: 'Pay with PayPal'}}
+      />
       {/* Auth Screens */}
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />

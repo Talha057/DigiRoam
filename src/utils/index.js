@@ -12,3 +12,8 @@ export const formatDataSize = bytes => {
     return `${(bytes / GB).toFixed(1)} GB`; // Show in GB if 1GB or more
   }
 };
+
+export const getPriceWithMarkup = (price, markupPercentage) => {
+  const markup = price * ((markupPercentage ?? 1) / 100);
+  return Number(price + markup).toFixed(2);
+};

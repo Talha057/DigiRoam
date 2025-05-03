@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Image, ImageBackground, Pressable} from 'react-native';
 import {homeStyles} from '../styles/homeStyles';
-import {height} from '../utils';
+import {getPriceWithMarkup, height} from '../utils';
 import {
   bannerBg,
   simBanner,
@@ -12,9 +12,10 @@ import {
 } from '../assets/images';
 import {useNavigation} from '@react-navigation/native';
 import {formatDataSize} from '../utils';
+import {useSelector} from 'react-redux';
 const SimCard = ({item}) => {
   const navigation = useNavigation();
-
+  const {settings} = useSelector(state => state.main);
   return (
     <Pressable onPress={() => navigation.navigate('SimDetails', {sim: item})}>
       <ImageBackground
@@ -60,7 +61,8 @@ const SimCard = ({item}) => {
               <Text style={homeStyles.simLabel}>PRICE</Text>
             </View>
             <Text style={homeStyles.simValue}>
-              ${item?.price} {item?.currencyCode}
+              ${getPriceWithMarkup(item?.price, settings?.pricePercentage)}
+              {/* ${item?.price} {item?.currencyCode} */}
             </Text>
           </View>
           <View style={homeStyles.btnContainer}>

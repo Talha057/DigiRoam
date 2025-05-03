@@ -15,8 +15,18 @@ export const login = createAsyncThunk(
       const res = await apiManager.post('/user/login', data);
       AsyncStorage.setItem('token', JSON.stringify(res.data.data.accessToken));
       return res.data;
-    } catch (error) {
-      return throwError(error, rejectWithValue);
+    } catch (err) {
+      // throw error;
+      if (err.response && err.response.data && err.response.data.message) {
+        return rejectWithValue({
+          message: err.response.data.message,
+          code: err.response.status || null,
+        });
+      }
+      return rejectWithValue({
+        message: 'Network Error. Please try again.',
+        code: null,
+      });
     }
   },
 );

@@ -21,10 +21,10 @@ import {
   simIcon3,
   simIcon4,
 } from '../../assets/images';
-import {formatDataSize, height} from '../../utils';
+import {formatDataSize, getPriceWithMarkup, height} from '../../utils';
 import {useDispatch, useSelector} from 'react-redux';
 import {scaleValue} from '../../constants/Sizes';
-import {addToCart} from '../../store/main/mainThunk';
+import {addToBuyNow, addToCart} from '../../store/main/mainThunk';
 import Toast from 'react-native-simple-toast';
 import {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
@@ -36,7 +36,7 @@ const SimDetails = ({route}) => {
   const {token} = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const {loading, cart} = useSelector(state => state.main);
+  const {loading, cart, settings} = useSelector(state => state.main);
   const [showModal, setShowModal] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const handleCart = async () => {
@@ -66,11 +66,11 @@ const SimDetails = ({route}) => {
         productName: sim.name,
         productPrice: sim.price,
         productQuantity: 1,
-        _id: sim._id,
       };
-      console.log(item);
       try {
+        const res = await dispatch(addToBuyNow(item)).unwrap();
         dispatch(setInstantBuyItem(item));
+        console.log('ress', res);
         navigation.navigate('Cart', {buyNow: true});
       } catch (err) {
         console.log(err);
@@ -134,7 +134,8 @@ const SimDetails = ({route}) => {
                 <Text style={homeStyles.simLabel}>PRICE</Text>
               </View>
               <Text style={homeStyles.simValue}>
-                ${sim?.price} {sim?.currencyCode}
+                {/* ${sim?.price} {sim?.currencyCode} */}$
+                {getPriceWithMarkup(sim?.price, settings?.pricePercentage)}
               </Text>
             </View>
           </View>
@@ -191,7 +192,8 @@ const SimDetails = ({route}) => {
       </ScrollView>
       <View style={simDetailsStyle.footer}>
         <Text style={simDetailsStyle.priceText}>
-          ${sim?.price} {sim?.currencyCode}
+          {/* ${sim?.price} {sim?.currencyCode} */}$
+          {getPriceWithMarkup(sim?.price, settings?.pricePercentage)}
         </Text>
         {/* <View style={{flexDirection: 'row', gap: 10}}>
           <Pressable

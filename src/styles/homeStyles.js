@@ -6,22 +6,28 @@ import {globalColors} from '../constants/Colors';
 export const homeStyles = StyleSheet.create({
   header: {
     gap: scaleYValue(10),
-    paddingTop: height * 0.03,
     width: width * 0.92,
+    paddingTop: height * 0.02,
     alignSelf: 'center',
   },
-
   headerFirstSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // alignItems: 'center',
-    height: height * 0.06,
+    alignItems: 'center',
+    width: width * 0.92,
+    alignSelf: 'center',
+    paddingVertical: height * 0.03,
+    // height: height * 0.06,
   },
   headerText: {
     color: globalColors.black,
-    fontSize: scaleXValue(20),
-    letterSpacing: 5,
+    fontSize: scaleXValue(22),
     fontFamily: 'Montserrat-Bold',
+  },
+  headerDescription: {
+    color: globalColors.black,
+    fontSize: scaleXValue(16),
+    fontFamily: 'Montserrat-Regular',
   },
   cartDot: {
     borderWidth: 1,
@@ -74,7 +80,7 @@ export const homeStyles = StyleSheet.create({
   globalContainer: {
     backgroundColor: globalColors.grey,
     paddingHorizontal: width * 0.05,
-    paddingVertical: height * 0.04,
+    paddingTop: height * 0.04,
   },
   globalImageContainer: {
     position: 'relative',
@@ -135,7 +141,7 @@ export const homeStyles = StyleSheet.create({
     backgroundColor: globalColors.grey,
     flex: 2,
     paddingHorizontal: width * 0.05,
-    paddingVertical: height * 0.04,
+    paddingVertical: height * 0.02,
   },
   bannerStyle: {
     width: '100%',
@@ -148,7 +154,7 @@ export const homeStyles = StyleSheet.create({
     fontSize: scaleValue(18),
     marginBottom: scaleYValue(5),
   },
-  listContainer: {gap: 15, paddingBottom: height * 0.18},
+  listContainer: {gap: 15},
   listItem: {
     backgroundColor: globalColors.backgroundColor,
     paddingHorizontal: scaleXValue(10),
@@ -183,5 +189,147 @@ export const homeStyles = StyleSheet.create({
     fontFamily: 'Montserrat-Medium',
     fontSize: 12,
     padding: 2,
+  },
+  text: {
+    color: globalColors.black,
+    fontSize: scaleXValue(18),
+    marginVertical: height * 0.01,
+    fontFamily: 'Montserrat-Bold',
+    textAlign: 'center',
+    paddingHorizontal: width * 0.04,
+  },
+  listContainer: {
+    paddingVertical: scaleYValue(10),
+    // paddingHorizontal: width * 0.04,
+    gap: scaleYValue(15),
+  },
+  gradientContainer: {
+    height: height * 0.3,
+    borderRadius: 10,
+    shadowColor: globalColors.black,
+    elevation: 10,
+    shadowOpacity: 1,
+    shadowRadius: 10,
+    shadowOffset: {width: 0, height: 2},
+    justifyContent: 'center',
+    paddingLeft: '5%',
+    marginBottom: scaleYValue(10),
+  },
+  iconCircle: {
+    backgroundColor: '#FF7F50',
+    width: scaleValue(40),
+    height: scaleValue(40),
+    borderRadius: scaleValue(20),
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: scaleYValue(15),
+  },
+  titleText: {
+    color: globalColors.black,
+    fontSize: scaleXValue(18),
+    fontFamily: 'Montserrat-Bold',
+  },
+  descriptionText: {
+    color: globalColors.black,
+    fontSize: scaleXValue(15),
+    fontFamily: 'Montserrat-Regular',
+    paddingRight: '3%',
+  },
+  testimonialRoot: {
+    paddingHorizontal: width * 0.04,
+    paddingTop: height * 0.02,
+  },
+  testimonialHeader: {
+    paddingVertical: height * 0.02,
+  },
+  testimonialHeading: {
+    fontFamily: 'Montserrat-Bold',
+    fontSize: scaleXValue(22),
+    color: globalColors.black,
+  },
+  testimonialsContainer: {
+    marginTop: scaleYValue(10),
+    gap: scaleYValue(20),
+  },
+  testimonialItem: {
+    backgroundColor: globalColors.textColor,
+    paddingHorizontal: scaleValue(15),
+    paddingVertical: scaleValue(10),
+    flexDirection: 'row',
+    borderLeftWidth: 3,
+    borderLeftColor: '#FF7F50',
+  },
+  testimonialContent: {
+    flex: 1,
+  },
+  customerName: {
+    fontFamily: 'Montserrat-Bold',
+    fontSize: scaleXValue(16),
+    color: globalColors.black,
+    marginBottom: scaleYValue(5),
+  },
+  testimonialText: {
+    fontFamily: 'Montserrat-Regular',
+    fontSize: scaleXValue(14),
+    color: globalColors.black,
+    lineHeight: scaleValue(20),
+  },
+  quoteIcon: {
+    justifyContent: 'flex-start',
+    paddingLeft: scaleValue(5),
+  },
+  quoteText: {
+    fontSize: scaleXValue(24),
+    color: '#FF7F50',
+    fontFamily: 'Montserrat-Bold',
+  },
+
+  faqHeader: {
+    paddingVertical: height * 0.02,
+  },
+  faqHeaderText: {
+    fontFamily: 'Montserrat-Bold',
+    fontSize: scaleXValue(26),
+    color: globalColors.black,
+    lineHeight: scaleValue(34),
+  },
+  faqDescription: {
+    fontFamily: 'Montserrat-Regular',
+    fontSize: scaleXValue(14),
+    color: globalColors.black,
+    lineHeight: scaleValue(20),
+    marginBottom: scaleYValue(20),
+  },
+  faqContainer: {
+    marginTop: scaleYValue(10),
+    gap: scaleYValue(10),
+  },
+  faqItem: {
+    backgroundColor: globalColors.textColor,
+    borderRadius: scaleValue(8),
+    marginBottom: scaleYValue(10),
+  },
+  questionContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: scaleValue(15),
+    borderBottomColor: '#EFEFEF',
+  },
+  questionText: {
+    fontFamily: 'Montserrat-SemiBold',
+    fontSize: scaleXValue(16),
+    color: globalColors.black,
+    flex: 1,
+  },
+  answerContainer: {
+    padding: scaleValue(15),
+    backgroundColor: '#FCFCFC',
+  },
+  answerText: {
+    fontFamily: 'Montserrat-Regular',
+    fontSize: scaleXValue(14),
+    color: globalColors.lightBlack,
+    lineHeight: scaleValue(22),
   },
 });

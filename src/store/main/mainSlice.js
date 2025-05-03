@@ -2,8 +2,10 @@ import {createSlice} from '@reduxjs/toolkit';
 import {
   addToCart,
   getCartDetails,
+  getSettings,
   getUserEsims,
   removeFromCart,
+  settings,
 } from './mainThunk';
 
 const INITIAL_STATE = {
@@ -11,20 +13,13 @@ const INITIAL_STATE = {
   loading: false,
   instantBuyItem: null,
   userEsims: [],
+  settings: null,
 };
 const mainSlice = createSlice({
   initialState: INITIAL_STATE,
   name: 'main',
 
   reducers: {
-    // addToCart: (state, action) => {
-    //   const {packageCode} = action.payload;
-    //   const existingItemIndex = state.cart.findIndex(
-    //     elem => elem.packageCode === packageCode,
-    //   );
-    //   if (existingItemIndex !== -1) state.cart[existingItemIndex].quantity += 1;
-    //   else state.cart.push({...action.payload, quantity: 1});
-    // },
     setInstantBuyItem: (state, action) => {
       state.instantBuyItem = action.payload;
     },
@@ -32,6 +27,9 @@ const mainSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(getCartDetails.fulfilled, (state, action) => {
       state.cart = action.payload.cart;
+    });
+    builder.addCase(getCartDetails.rejected, (state, action) => {
+      state.cart = [];
     });
     builder.addCase(addToCart.fulfilled, (state, action) => {
       state.cart = action.payload;
@@ -45,6 +43,9 @@ const mainSlice = createSlice({
     builder.addCase(getUserEsims.fulfilled, (state, action) => {
       state.userEsims = action.payload.esims;
       state.loading = false;
+    });
+    builder.addCase(getSettings.fulfilled, (state, action) => {
+      state.settings = action.payload.settings;
     });
     builder.addCase(getUserEsims.rejected, (state, action) => {
       state.userEsims = action.payload.esims;
