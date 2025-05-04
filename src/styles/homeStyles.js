@@ -19,6 +19,17 @@ export const homeStyles = StyleSheet.create({
     paddingVertical: height * 0.03,
     // height: height * 0.06,
   },
+  loginBtn: {
+    paddingVertical: scaleValue(8),
+    paddingHorizontal: scaleValue(16),
+    backgroundColor: globalColors.backgroundColor,
+    borderRadius: scaleValue(6),
+  },
+  loginText: {
+    fontSize: scaleValue(16),
+    color: globalColors.textColor,
+    fontFamily: 'Montserrat-Medium',
+  },
   headerText: {
     color: globalColors.black,
     fontSize: scaleXValue(22),

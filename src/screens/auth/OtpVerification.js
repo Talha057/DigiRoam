@@ -17,7 +17,7 @@ import {otpStyles} from '../../styles/otpStyles';
 import {useDebugValue, useEffect, useRef, useState} from 'react';
 import Animated, {BounceIn} from 'react-native-reanimated';
 import {useDispatch, useSelector} from 'react-redux';
-import {resetOtp, verifyOtp} from '../../store/auth/authThunk';
+import {forgotPassword, resetOtp, verifyOtp} from '../../store/auth/authThunk';
 import Toast from 'react-native-simple-toast';
 import {scaleValue} from '../../constants/Sizes';
 const OtpVerification = ({route, navigation}) => {
@@ -39,6 +39,14 @@ const OtpVerification = ({route, navigation}) => {
       Toast.show(response.data.message || response.message);
 
       navigation.replace('Login');
+    } catch (err) {
+      Toast.show(err);
+    }
+  };
+  const onSend = async () => {
+    try {
+      const response = await dispatch(forgotPassword({email})).unwrap();
+      Toast.show('Resend succesfully');
     } catch (err) {
       Toast.show(err);
     }
@@ -120,7 +128,9 @@ const OtpVerification = ({route, navigation}) => {
           </Text>
           <View style={otpStyles.footer}>
             <Text style={otpStyles.footerText}>Didn't receive code?</Text>
-            <Text style={otpStyles.resendNow}>Resend Now</Text>
+            <Text style={otpStyles.resendNow} onPress={onSend}>
+              Resend Now
+            </Text>
           </View>
         </View>
       </ScrollView>

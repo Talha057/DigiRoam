@@ -236,7 +236,10 @@ const SimDetails = ({route}) => {
           cancelText="Cancel"
           showCancel
           onClose={() => setShowModal(false)}
-          onConfirm={() => navigation.navigate('Login')}
+          onConfirm={() => {
+            setShowModal(false);
+            navigation.navigate('Login');
+          }}
         />
       </View>
     </View>

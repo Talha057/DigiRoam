@@ -139,9 +139,7 @@ const Signup = ({navigation}) => {
           </View> */}
         <Text style={loginStyles.signupText}>
           Already have an account?{' '}
-          <Text
-            style={loginStyles.signup}
-            onPress={() => navigation.navigate('Login')}>
+          <Text style={loginStyles.signup} onPress={() => navigation.goBack()}>
             Login
           </Text>
         </Text>

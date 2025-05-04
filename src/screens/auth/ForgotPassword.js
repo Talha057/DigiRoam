@@ -10,6 +10,7 @@ import {useState} from 'react';
 import Toast from 'react-native-simple-toast';
 import {scaleValue} from '../../constants/Sizes';
 import {color} from 'react-native-elements/dist/helpers';
+import {loginStyles} from '../../styles/loginStyles';
 
 const ForgotPassword = ({navigation}) => {
   const dispatch = useDispatch();
@@ -45,13 +46,18 @@ const ForgotPassword = ({navigation}) => {
           Let me know if you'd like details about implementing OTP verification
           in your project
         </Text>
-        <TextInput
-          placeholder="Email"
-          style={forgotPassStyles.textInput}
-          value={email}
-          placeholderTextColor={globalColors.textColor}
-          onChangeText={setEmail}
-        />
+        <View style={loginStyles.inputContainer}>
+          <Text style={loginStyles.label}>Email</Text>
+          <View style={loginStyles.passwordContainer}>
+            <TextInput
+              placeholder=""
+              value={email}
+              onChangeText={setEmail}
+              style={forgotPassStyles.textInput}
+            />
+          </View>
+        </View>
+
         <Button
           onPress={onSend}
           title={'Send'}

@@ -254,7 +254,7 @@ const Home = ({navigation}) => {
           style={{width: width * 0.3, height: height * 0.03, top: -5}}
           resizeMode="stretch"
         />
-        {token && (
+        {token ? (
           <Pressable onPress={() => navigation.navigate('Cart')}>
             <Ionicons
               name="cart-outline"
@@ -263,6 +263,12 @@ const Home = ({navigation}) => {
             />
             {cart?.items?.length > 0 && <View style={homeStyles.cartDot} />}
           </Pressable>
+        ) : (
+          <TouchableOpacity
+            style={homeStyles.loginBtn}
+            onPress={() => navigation.navigate('Login')}>
+            <Text style={homeStyles.loginText}>Login</Text>
+          </TouchableOpacity>
         )}
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>

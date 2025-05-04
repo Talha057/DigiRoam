@@ -8,7 +8,7 @@ export const forgotPassStyles = StyleSheet.create({
     height: '92%',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: '10%',
+    paddingHorizontal: '5%',
     bottom: '5%',
   },
   heading: {
@@ -27,20 +27,17 @@ export const forgotPassStyles = StyleSheet.create({
   textInput: {
     fontFamily: 'Montserrat-Medium',
     fontSize: scaleValue(17),
-    borderBottomWidth: 1,
-    borderBottomColor: globalColors.textColor,
     width: '100%',
-    marginBottom: '6%',
     height: height * 0.065,
     color: globalColors.textColor,
   },
   btnStyle: {
     backgroundColor: globalColors.textColor,
-    width: '110%',
+    width: '95%',
     height: height * 0.065,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: 20,
   },
   btnText: {
     color: globalColors.backgroundColor,
