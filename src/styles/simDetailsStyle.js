@@ -21,7 +21,7 @@ export const simDetailsStyle = StyleSheet.create({
   },
   simBanner: {
     width: '93%',
-    height: height * 0.28,
+    height: height * 0.25,
     alignSelf: 'center',
     borderRadius: 20,
     marginBottom: height * 0.03,

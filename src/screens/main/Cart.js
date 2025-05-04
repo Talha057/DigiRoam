@@ -19,6 +19,7 @@ import {
   clearCart,
   createPaymentIntent,
   getCartDetails,
+  getUserEsims,
   orderProfile,
   removeFromCart,
   savePayment,
@@ -110,10 +111,11 @@ const Cart = ({navigation, route}) => {
           packageInfoList: savePaymentPackageInfoList,
         }),
       );
-      Toast.show('Payment Succesfull');
+      Toast.show('Payment Successful');
       buyNow
         ? navigation.goBack()
         : await Promise.all(dispatch(clearCart()), dispatch(getCartDetails()));
+      getMyEsims();
       setCardLoading(false);
     } catch (err) {
       setCardLoading(false);
@@ -127,6 +129,13 @@ const Cart = ({navigation, route}) => {
   const getCart = async () => {
     try {
       await dispatch(getCartDetails()).unwrap();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const getMyEsims = async () => {
+    try {
+      await dispatch(getUserEsims()).unwrap();
     } catch (err) {
       console.log(err);
     }
@@ -152,6 +161,7 @@ const Cart = ({navigation, route}) => {
           console.log('helllo');
           await getCart();
         }
+        await getMyEsims();
       },
     });
   };

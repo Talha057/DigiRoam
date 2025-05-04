@@ -25,7 +25,7 @@ const BottomTab = () => {
         headerShown: false,
         tabBarHideOnKeyboard: true,
       }}
-      tabBar={props => <MyTabBar {...props} token={token} />}>
+      tabBar={props => token && <MyTabBar {...props} />}>
       <Tab.Screen name="Store" component={Home} />
       {token && <Tab.Screen name="My eSims" component={Esim} />}
       {token && <Tab.Screen name="Profile" component={Profile} />}

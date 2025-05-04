@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   ActivityIndicator,
+  FlatList,
 } from 'react-native';
 import {globalStyle} from '../../styles/globalStyles';
 import {profileStyles} from '../../styles/profileStyles';
@@ -28,6 +29,7 @@ import {editUserProfile, getMyProfile} from '../../store/auth/authThunk';
 import {simDetailsStyle} from '../../styles/simDetailsStyle';
 import AppModal from '../../components/AppModal';
 import {cartStyles} from '../../styles/cartStyles';
+import {esimsStyles} from '../../styles/esimStyles';
 
 const MyEsims = () => {
   const {loading, userEsims} = useSelector(state => state.main);
@@ -44,13 +46,36 @@ const MyEsims = () => {
   useEffect(() => {
     getMyEsims();
   }, []);
-
+  const renderEsimCard = ({item}) => (
+    <View style={esimsStyles.card}>
+      <View style={esimsStyles.cardLeft}>
+        <Ionicons
+          name="cellular-outline"
+          size={30}
+          color={globalColors.backgroundColor}
+        />
+      </View>
+      <View style={esimsStyles.cardRight}>
+        <Text style={esimsStyles.simName}>
+          {item?.packageList[0].packageName || 'eSIM Plan'}
+        </Text>
+        <Text style={esimsStyles.simDetails}>
+          {/* {item.country || 'Country Unknown'} - {item.dataAmount || '0GB'} */}
+          Expiry:{' '}
+          {item?.expiredTime &&
+            new Date(item?.expiredTime).toLocaleDateString()}
+        </Text>
+        <Text style={esimsStyles.simStatus}>Status: {item.esimStatus}</Text>
+      </View>
+    </View>
+  );
+  console.log(userEsims);
   return (
     <View style={[globalStyle.container]}>
       {/* Header section */}
       <View style={profileStyles.headerContainer}>
         <View style={homeStyles.headerFirstSection}>
-          <Text style={homeStyles.headerText}>MY ESIMS</Text>
+          <Text style={homeStyles.headerText}>MY eSIMS</Text>
         </View>
       </View>
       <View
@@ -64,7 +89,13 @@ const MyEsims = () => {
         ) : (
           <>
             {userEsims?.length > 0 ? (
-              <View />
+              // <View />
+              <FlatList
+                data={userEsims}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={renderEsimCard}
+                contentContainerStyle={esimsStyles.listContent}
+              />
             ) : (
               <View
                 style={{

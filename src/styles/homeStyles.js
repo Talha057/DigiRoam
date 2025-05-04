@@ -89,8 +89,8 @@ export const homeStyles = StyleSheet.create({
     marginVertical: height * 0.05,
   },
   simBanner: {
-    width: 220,
-    height: 130,
+    width: 200,
+    height: 120,
     alignSelf: 'center',
     borderRadius: 20,
     borderWidth: 1,
@@ -108,7 +108,7 @@ export const homeStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: '4%',
+    paddingVertical: '2%',
     gap: 5,
     borderBottomWidth: 0.5,
     borderBottomColor: '#fff',
@@ -169,7 +169,7 @@ export const homeStyles = StyleSheet.create({
     alignItems: 'center',
     gap: scaleValue(15),
   },
-  listImage: {height: 40, width: 50, borderRadius: 10},
+  listImage: {height: 30, width: 40, borderRadius: 10},
   listTitle: {
     fontFamily: 'Montserrat-Bold',
     fontSize: scaleXValue(20),

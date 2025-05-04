@@ -219,18 +219,12 @@ const SimDetails = ({route}) => {
             title={'Add to Cart'}
             btnStyle={simDetailsStyle.btnStyle}
             textStyle={simDetailsStyle.btnText}
-            loading={loading}
-            loaderColor={globalColors.black}
-            loaderSize={scaleValue(12)}
             onPress={handleCart}
           />
           <Button
             title={'Buy Now'}
             btnStyle={simDetailsStyle.btnStyle}
             textStyle={simDetailsStyle.btnText}
-            loading={loading}
-            loaderColor={globalColors.black}
-            loaderSize={scaleValue(12)}
             onPress={handleBuyNow}
           />
         </View>

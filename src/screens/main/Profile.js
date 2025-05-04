@@ -109,7 +109,7 @@ const ProfileScreen = () => {
       <ScrollView
         style={profileStyles.container}
         contentContainerStyle={{
-          paddingBottom: height * 0.13,
+          paddingBottom: height * 0.05,
         }}>
         <View style={profileStyles.header}>
           <View style={profileStyles.avatar}>

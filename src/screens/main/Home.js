@@ -211,8 +211,10 @@ const Home = ({navigation}) => {
       const res = await dispatch(verifyUserToken()).unwrap();
       console.log(res);
     } catch (err) {
-      setIsSessionExpired(true);
-      console.log(err);
+      if (err?.code === 401) {
+        setIsSessionExpired(true);
+      }
+      console.log('errrrr', err);
     }
   };
   const handleLogout = async () => {

@@ -14,6 +14,7 @@ export const getEsims = createAsyncThunk(
       const res = await apiManager.post('/user/getDataPackagesList', data);
       return res.data;
     } catch (error) {
+      console.log(error);
       return throwError(error, rejectWithValue);
     }
   },
@@ -148,7 +149,6 @@ export const verifyUserToken = createAsyncThunk(
       );
       return res.data;
     } catch (err) {
-      console.log(err.response);
       if (err.response && err.response.data && err.response.data.message) {
         return rejectWithValue({
           message: err.response.data.message,

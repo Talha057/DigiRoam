@@ -6,7 +6,6 @@ import {globalColors} from '../constants/Colors';
 export const otpStyles = StyleSheet.create({
   secondContainer: {
     height: height * 0.9,
-    // justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: '10%',
     paddingTop: '15%',

@@ -77,7 +77,14 @@ const OtpVerification = ({route, navigation}) => {
               <Pressable
                 key={index}
                 onPress={() => {
-                  inputRef.current?.focus();
+                  if (inputRef.current?.isFocused()) {
+                    inputRef.current.blur();
+                    setTimeout(() => {
+                      inputRef.current?.focus();
+                    }, 100);
+                  } else {
+                    inputRef.current?.focus();
+                  }
                 }}
                 style={[
                   otpStyles.codeInput,
