@@ -22,6 +22,7 @@ import {changePassword, getAllCountries} from '../../store/main/mainThunk';
 import {editUserProfile, getMyProfile} from '../../store/auth/authThunk';
 import {simDetailsStyle} from '../../styles/simDetailsStyle';
 import AppModal from '../../components/AppModal';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const ProfileScreen = () => {
   const {user} = useSelector(state => state.auth);
@@ -99,7 +100,14 @@ const ProfileScreen = () => {
     }
   };
   return (
-    <View style={[globalStyle.container]}>
+    <SafeAreaView
+      style={[
+        globalStyle.container,
+        {
+          backgroundColor: globalColors.textColor,
+        },
+      ]}
+      edges={['top']}>
       {/* Header section */}
       <View style={profileStyles.headerContainer}>
         <View style={homeStyles.headerFirstSection}>
@@ -369,7 +377,7 @@ const ProfileScreen = () => {
         onClose={() => setIsLogout(false)}
         onConfirm={handleLogout}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -30,6 +30,7 @@ import {simDetailsStyle} from '../../styles/simDetailsStyle';
 import Button from '../../components/Button';
 import {FlatList} from 'react-native';
 import {getPriceWithMarkup} from '../../utils';
+import {SafeAreaView} from 'react-native-safe-area-context';
 const STRIPE_PUBLISHABLE_KEY =
   'pk_test_51PtX1yP5I2dh2w2olaE2SXdVYWT056atlVJ3jVZKliMu6GQUa17xzEQHTrELjjJRWal7JwTySuFZLdeNJ7SGwrX700LCXKN0LP';
 
@@ -258,7 +259,7 @@ const Cart = ({navigation, route}) => {
         )}
 
         {dataToRender.length > 0 && (
-          <View style={simDetailsStyle.footer}>
+          <SafeAreaView style={simDetailsStyle.footer} edges={['bottom']}>
             <Text style={simDetailsStyle.priceText}>
               ${totalPrice.toFixed(2)}
             </Text>
@@ -299,7 +300,7 @@ const Cart = ({navigation, route}) => {
                 onPress={createIntent}
               />
             </View>
-          </View>
+          </SafeAreaView>
         )}
       </View>
     </StripeProvider>

@@ -14,6 +14,7 @@ import ForgotPassword from '../../screens/auth/ForgotPassword';
 import OtpVerification from '../../screens/auth/OtpVerification';
 import {useSelector} from 'react-redux';
 import PayPalWebView from '../../components/PaypalWebView';
+import EsimDetailsScreen from '../../screens/main/EsimsDetails';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const BottomTab = () => {
@@ -49,6 +50,7 @@ const MainStack = () => {
         component={PayPalWebView}
         options={{headerShown: true, title: 'Pay with PayPal'}}
       />
+      <Stack.Screen name="EsimDetails" component={EsimDetailsScreen} />
       {/* Auth Screens */}
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />

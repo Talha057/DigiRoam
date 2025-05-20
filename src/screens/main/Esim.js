@@ -30,8 +30,9 @@ import {simDetailsStyle} from '../../styles/simDetailsStyle';
 import AppModal from '../../components/AppModal';
 import {cartStyles} from '../../styles/cartStyles';
 import {esimsStyles} from '../../styles/esimStyles';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
-const MyEsims = () => {
+const MyEsims = ({navigation}) => {
   const {loading, userEsims} = useSelector(state => state.main);
   const dispatch = useDispatch();
 
@@ -47,7 +48,9 @@ const MyEsims = () => {
     getMyEsims();
   }, []);
   const renderEsimCard = ({item}) => (
-    <View style={esimsStyles.card}>
+    <TouchableOpacity
+      style={esimsStyles.card}
+      onPress={() => navigation.navigate('EsimDetails', {esimData: item})}>
       <View style={esimsStyles.cardLeft}>
         <Ionicons
           name="cellular-outline"
@@ -67,17 +70,20 @@ const MyEsims = () => {
         </Text>
         <Text style={esimsStyles.simStatus}>Status: {item.esimStatus}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
   console.log(userEsims);
   return (
-    <View style={[globalStyle.container]}>
+    <SafeAreaView
+      style={[globalStyle.container, {backgroundColor: globalColors.textColor}]}
+      edges={['top']}>
       {/* Header section */}
       <View style={profileStyles.headerContainer}>
         <View style={homeStyles.headerFirstSection}>
           <Text style={homeStyles.headerText}>MY eSIMS</Text>
         </View>
       </View>
+
       <View
         style={{
           flex: 1,
@@ -111,7 +117,7 @@ const MyEsims = () => {
           </>
         )}
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

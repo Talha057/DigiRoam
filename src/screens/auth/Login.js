@@ -17,7 +17,7 @@ import SocialBtn from '../../components/SocialBtn';
 import Feather from 'react-native-vector-icons/Feather';
 import CheckBox from 'react-native-check-box';
 import {useDispatch, useSelector} from 'react-redux';
-import {login} from '../../store/auth/authThunk';
+import {googleLogin, login} from '../../store/auth/authThunk';
 import Toast from 'react-native-simple-toast';
 import Button from '../../components/Button';
 import {setToken} from '../../store/auth/authSlice';
@@ -44,6 +44,13 @@ const Login = ({navigation}) => {
         navigation.navigate('OtpVerification', {email, key: 'verify'});
       }
       Toast.show(err.message);
+    }
+  };
+  const handleGoogle = async () => {
+    try {
+      const response = await dispatch(googleLogin()).unwrap();
+    } catch (err) {
+      console.log(err);
     }
   };
   return (
@@ -121,7 +128,11 @@ const Login = ({navigation}) => {
           <View style={loginStyles.line}></View>
         </View>
         <View style={loginStyles.socialIconWrapper}>
-          <SocialBtn image={google} style={loginStyles.socialBtn} />
+          <SocialBtn
+            image={google}
+            style={loginStyles.socialBtn}
+            handleOnPress={handleGoogle}
+          />
           <SocialBtn image={facebook} style={loginStyles.socialBtn} />
         </View>
         <Text style={loginStyles.signupText}>

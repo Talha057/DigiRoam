@@ -31,6 +31,7 @@ import {useNavigation} from '@react-navigation/native';
 import {setInstantBuyItem} from '../../store/main/mainSlice';
 import LoginSignupPromptModal from '../../components/LoginPromptModal';
 import AppModal from '../../components/AppModal';
+import {SafeAreaView} from 'react-native-safe-area-context';
 const SimDetails = ({route}) => {
   const {sim} = route.params;
   const {token} = useSelector(state => state.auth);
@@ -80,11 +81,17 @@ const SimDetails = ({route}) => {
     }
   };
   return (
-    <View style={globalStyle.container}>
+    <SafeAreaView
+      style={[
+        globalStyle.container,
+        {backgroundColor: globalColors.backgroundColor},
+      ]}
+      edges={['top']}>
       <StatusBar
         backgroundColor={globalColors.backgroundColor}
         barStyle={'light-content'}
       />
+
       <Header
         title={'Details'}
         textStyle={simDetailsStyle.headerText}
@@ -190,7 +197,7 @@ const SimDetails = ({route}) => {
           </View>
         </View>
       </ScrollView>
-      <View style={simDetailsStyle.footer}>
+      <SafeAreaView style={simDetailsStyle.footer} edges={['bottom']}>
         <Text style={simDetailsStyle.priceText}>
           {/* ${sim?.price} {sim?.currencyCode} */}$
           {getPriceWithMarkup(sim?.price, settings?.pricePercentage)}
@@ -241,8 +248,8 @@ const SimDetails = ({route}) => {
             navigation.navigate('Login');
           }}
         />
-      </View>
-    </View>
+      </SafeAreaView>
+    </SafeAreaView>
   );
 };
 export default SimDetails;

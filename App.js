@@ -10,7 +10,15 @@ import MainStack from './src/navigation/bottomTab';
 import {globalColors} from './src/constants/Colors';
 import {useDispatch} from 'react-redux';
 import {setToken} from './src/store/auth/authSlice';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
+GoogleSignin.configure({
+  webClientId:
+    '274572296096-anmd45dq03phbotttrh566kqlevq742u.apps.googleusercontent.com',
+  iosClientId:
+    '991168277602-s72mhsgrhlafp6i69p60gnh4t43k0oke.apps.googleusercontent.com',
+});
 const AppEntry = () => {
   const [loading, setLoading] = useState(true);
   // const [localToken, setLocalToken] = useState(null);
@@ -33,13 +41,15 @@ const AppEntry = () => {
   if (loading) return null; // Optional fallback while splash is showing
 
   return (
-    <NavigationContainer>
-      <StatusBar
-        backgroundColor={globalColors.backgroundColor}
-        barStyle={'light-content'}
-      />
-      <MainStack />
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <StatusBar
+          backgroundColor={globalColors.backgroundColor}
+          barStyle={'light-content'}
+        />
+        <MainStack />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 };
 

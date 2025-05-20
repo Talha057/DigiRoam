@@ -1,12 +1,19 @@
-import {View, Image, ViewStyle, ImageStyle, StyleSheet} from 'react-native';
+import {
+  View,
+  Image,
+  ViewStyle,
+  ImageStyle,
+  StyleSheet,
+  Pressable,
+} from 'react-native';
 import React from 'react';
 import {width} from '../utils';
 
-const SocialBtn = ({image, style}) => {
+const SocialBtn = ({image, style, handleOnPress}) => {
   return (
-    <View style={style}>
+    <Pressable style={style} onPress={handleOnPress}>
       <Image source={image} style={styles.icon} />
-    </View>
+    </Pressable>
   );
 };
 

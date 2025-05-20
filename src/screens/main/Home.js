@@ -10,6 +10,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   StyleSheet,
+  SafeAreaView,
 } from 'react-native';
 import {globalColors} from '../../constants/Colors';
 import {height, width} from '../../utils';
@@ -29,6 +30,8 @@ import {
   africaFlag,
   dubaiFlag,
   ukFlag,
+  saudiFlag,
+  thaiFlag,
 } from '../../assets/images';
 import {globalStyle} from '../../styles/globalStyles';
 import {homeStyles} from '../../styles/homeStyles';
@@ -60,11 +63,11 @@ const Home = ({navigation}) => {
     {title: 'United Kingdom', image: ukMap, countryCode: '!RG'},
   ];
   const localData = [
-    {title: 'Pakistan', image: pakFlag, countryCode: 'PK'},
+    {title: 'United Arab Emirates', image: dubaiFlag, countryCode: 'AE'},
     {title: 'United States', image: usFlag, countryCode: 'US'},
-    {title: 'South Africa', image: africaFlag, countryCode: 'ZA'},
-    {title: 'Dubai', image: dubaiFlag, countryCode: 'AE'},
+    {title: 'Saudi Arabia', image: saudiFlag, countryCode: 'KSA'},
     {title: 'United Kingdom', image: ukFlag, countryCode: 'GB'},
+    {title: 'Thailand', image: thaiFlag, countryCode: 'TH'},
   ];
   const cardsData = [
     {
@@ -236,18 +239,20 @@ const Home = ({navigation}) => {
     }
   }, []);
   return (
-    <View
+    <SafeAreaView
       style={[
         globalStyle.container,
 
         {
           backgroundColor: globalColors.textColor,
         },
-      ]}>
+      ]}
+      edges={['top']}>
       <StatusBar
         backgroundColor={globalColors.textColor}
         barStyle={'dark-content'}
       />
+
       <View style={homeStyles.headerFirstSection}>
         <Image
           source={require('../../assets/images/auth/roam-digi-logo.png')}
@@ -384,26 +389,30 @@ const Home = ({navigation}) => {
           <FlatList
             data={cardsData}
             keyExtractor={item => item.id}
-            contentContainerStyle={{paddingHorizontal: width * 0.04}}
+            contentContainerStyle={{
+              padding: width * 0.04,
+            }}
             renderItem={({item}) => (
               <LinearGradient
                 colors={['#FFFFFF', '#FFB36B']}
                 style={homeStyles.gradientContainer}
                 start={{x: 0, y: 0}}
                 end={{x: 1, y: 0}}>
-                <View style={homeStyles.iconCircle}>
-                  <MaterialIcons
-                    name={item.iconName}
-                    size={24}
-                    color={globalColors.textColor}
-                  />
+                <View style={{paddingLeft: '5%'}}>
+                  <View style={homeStyles.iconCircle}>
+                    <MaterialIcons
+                      name={item.iconName}
+                      size={24}
+                      color={globalColors.textColor}
+                    />
+                  </View>
+
+                  <Text style={homeStyles.titleText}>{item.title}</Text>
+
+                  <Text style={homeStyles.descriptionText}>
+                    {item.description}
+                  </Text>
                 </View>
-
-                <Text style={homeStyles.titleText}>{item.title}</Text>
-
-                <Text style={homeStyles.descriptionText}>
-                  {item.description}
-                </Text>
               </LinearGradient>
             )}
           />
@@ -485,7 +494,7 @@ const Home = ({navigation}) => {
         onClose={() => setIsSessionExpired(false)}
         onConfirm={handleLogout}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 export default Home;

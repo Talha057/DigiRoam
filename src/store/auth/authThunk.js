@@ -1,6 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {apiManager} from '../../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 const throwError = (err, rejectWithValue) => {
   if (err.response && err.response.data && err.response.data.message) {
     return rejectWithValue(err.response.data.message);
@@ -26,6 +27,38 @@ export const login = createAsyncThunk(
       return rejectWithValue({
         message: 'Network Error. Please try again.',
         code: null,
+      });
+    }
+  },
+);
+export const googleLogin = createAsyncThunk(
+  'auth/googlelogin',
+  async (data, {rejectWithValue}) => {
+    try {
+      const hasPlayService = await GoogleSignin.hasPlayServices({
+        showPlayServicesUpdateDialog: true,
+      });
+      if (!hasPlayService) {
+        throw new Error('This device doesnot have google play services');
+      }
+      const signInResult = await GoogleSignin.signIn();
+      console.log(signInResult);
+      // Try the new style of google-sign in result, from v13+ of that module
+      const idToken = signInResult?.data?.idToken;
+
+      if (!idToken) {
+        throw new Error('Unable to Login');
+      }
+      const response = await apiManager.post('/api/auth/native/callback', {
+        idToken,
+      });
+      AsyncStorage.setItem('token', JSON.stringify(res.data.data.accessToken));
+      return response?.data;
+    } catch (err) {
+      return rejectWithValue({
+        message:
+          err?.response?.data?.message || 'Network Error. Please try again.',
+        code: err?.response?.status || null,
       });
     }
   },

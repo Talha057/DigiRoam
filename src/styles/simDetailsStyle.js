@@ -40,6 +40,7 @@ export const simDetailsStyle = StyleSheet.create({
     paddingVertical: height * 0.03,
     paddingBottom: height * 0.12,
     gap: height * 0.02,
+    backgroundColor: globalColors.lightgrey,
   },
   additionalContainer: {
     backgroundColor: globalColors.grey,

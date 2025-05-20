@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Image,
   Pressable,
-  SafeAreaView,
   Keyboard,
 } from 'react-native';
 import {useLinkBuilder, useTheme} from '@react-navigation/native';
@@ -21,6 +20,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 function MyTabBar({state, descriptors, navigation}) {
   const [barDimensions, setBarDimensions] = useState({
@@ -99,65 +99,69 @@ function MyTabBar({state, descriptors, navigation}) {
     ),
   };
   return (
-    <Animated.View
-      onLayout={onTabbarLayout}
-      style={[styles.tabBar, keyboardStyle]}>
-      {<Animated.View style={tabStyle} />}
-      {state.routes.map((route, index) => {
-        const {options} = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
+    <SafeAreaView
+      edges={['bottom']}
+      style={{backgroundColor: globalColors.backgroundColor}}>
+      <Animated.View
+        onLayout={onTabbarLayout}
+        style={[styles.tabBar, keyboardStyle]}>
+        {<Animated.View style={tabStyle} />}
+        {state.routes.map((route, index) => {
+          const {options} = descriptors[route.key];
+          const label =
+            options.tabBarLabel !== undefined
+              ? options.tabBarLabel
+              : options.title !== undefined
+              ? options.title
+              : route.name;
 
-        const isFocused = state.index === index;
+          const isFocused = state.index === index;
 
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          });
+          const onPress = () => {
+            const event = navigation.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            });
 
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name, route.params);
-          }
-        };
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.navigate(route.name, route.params);
+            }
+          };
 
-        const onLongPress = () => {
-          navigation.emit({
-            type: 'tabLongPress',
-            target: route.key,
-          });
-        };
+          const onLongPress = () => {
+            navigation.emit({
+              type: 'tabLongPress',
+              target: route.key,
+            });
+          };
 
-        return (
-          <Pressable
-            key={route.name}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            style={styles.tabBarItem}>
-            {icon[route.name]({
-              color: isFocused
-                ? globalColors.backgroundColor
-                : globalColors.textColor,
-            })}
-            <Text
-              style={{
+          return (
+            <Pressable
+              key={route.name}
+              onPress={onPress}
+              onLongPress={onLongPress}
+              style={styles.tabBarItem}>
+              {icon[route.name]({
                 color: isFocused
                   ? globalColors.backgroundColor
                   : globalColors.textColor,
-                fontFamily: 'Montserrat-Medium',
-                fontSize: scaleValue(13),
-              }}>
-              {label}
-            </Text>
-          </Pressable>
-        );
-      })}
-    </Animated.View>
+              })}
+              <Text
+                style={{
+                  color: isFocused
+                    ? globalColors.backgroundColor
+                    : globalColors.textColor,
+                  fontFamily: 'Montserrat-Medium',
+                  fontSize: scaleValue(13),
+                }}>
+                {label}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </Animated.View>
+    </SafeAreaView>
   );
 }
 export default MyTabBar;
@@ -173,10 +177,7 @@ const styles = StyleSheet.create({
     // marginHorizontal: width * 0.04,
     paddingVertical: scaleYValue(10),
     // borderRadius: scaleValue(20),
-    shadowColor: '#000',
-    shadowOffset: {height: 10, width: 0},
-    shadowRadius: 10,
-    shadowOpacity: 0.1,
+
     elevation: 10,
   },
   tabBarItem: {
