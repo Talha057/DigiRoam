@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {
   forgotPassword,
   getMyProfile,
+  googleLogin,
   login,
   resetOtp,
   signup,
@@ -33,6 +34,13 @@ const authSlice = createSlice({
     builder.addCase(login.rejected, (state, action) => {
       state.loading = false;
     });
+
+    builder.addCase(googleLogin.fulfilled, (state, action) => {
+      state.loading = false;
+      state.user = action.payload.user;
+      state.token = action.payload.accessToken;
+    });
+
     builder.addCase(signup.pending, (state, action) => {
       state.loading = true;
     });

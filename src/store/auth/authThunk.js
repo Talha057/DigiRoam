@@ -2,6 +2,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {apiManager} from '../../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {AccessToken, LoginManager, Profile} from 'react-native-fbsdk-next';
 const throwError = (err, rejectWithValue) => {
   if (err.response && err.response.data && err.response.data.message) {
     return rejectWithValue(err.response.data.message);
@@ -42,17 +43,61 @@ export const googleLogin = createAsyncThunk(
         throw new Error('This device doesnot have google play services');
       }
       const signInResult = await GoogleSignin.signIn();
-      console.log(signInResult);
-      // Try the new style of google-sign in result, from v13+ of that module
-      const idToken = signInResult?.data?.idToken;
+
+      const {idToken, user} = signInResult?.data;
 
       if (!idToken) {
         throw new Error('Unable to Login');
       }
-      const response = await apiManager.post('/api/auth/native/callback', {
-        idToken,
+      const response = await apiManager.post('/auth/native/callback', {
+        provider: 'google',
+        providerId: idToken, // socialID of google|facebook|apple
+        email: user?.email, // user email retrieved from google|facebook|apple
+        name: user?.name, // user name retrieved from google|facebook|apple
       });
-      AsyncStorage.setItem('token', JSON.stringify(res.data.data.accessToken));
+      AsyncStorage.setItem('token', JSON.stringify(response.data.accessToken));
+      return response?.data;
+    } catch (err) {
+      return rejectWithValue({
+        message:
+          err?.response?.data?.message || 'Network Error. Please try again.',
+        code: err?.response?.status || null,
+      });
+    }
+  },
+);
+
+export const facebookLogin = createAsyncThunk(
+  'auth/facebookLogin',
+  async (_, {rejectWithValue}) => {
+    try {
+      const result = await LoginManager.logInWithPermissions([
+        'public_profile',
+        'email',
+      ]);
+
+      if (result.isCancelled) {
+        console.log('login cancelled');
+        return;
+      }
+
+      const data = await AccessToken.getCurrentAccessToken();
+
+      if (!data) {
+        console.log('something went wrong');
+        return;
+      }
+
+      const profile = await Profile.getCurrentProfile();
+
+      const response = await apiManager.post('/auth/native/callback', {
+        provider: 'facebook',
+        providerId: profile?.userID, // socialID of google|facebook|apple
+        email: profile?.email, // user email retrieved from google|facebook|apple
+        name: `${profile.firstName} ${profile.lastName}`, // user name retrieved from google|facebook|apple
+      });
+      console.log(response.data);
+      AsyncStorage.setItem('token', JSON.stringify(response.data.accessToken));
       return response?.data;
     } catch (err) {
       return rejectWithValue({

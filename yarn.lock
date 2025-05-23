@@ -6454,6 +6454,11 @@ react-native-elements@^3.4.3:
     react-native-ratings "8.0.4"
     react-native-size-matters "^0.3.1"
 
+react-native-fbsdk-next@^13.4.1:
+  version "13.4.1"
+  resolved "https://registry.npmjs.org/react-native-fbsdk-next/-/react-native-fbsdk-next-13.4.1.tgz"
+  integrity sha512-Cto+oF0FJyvxKDjKyLKI5DgnLCeeRlXvVQb8qw0XesT1Xune1ijDWAnvt9fy6wXJ4G7K510xKkcSUsbK/KyPhg==
+
 react-native-is-edge-to-edge@^1.1.6:
   version "1.1.6"
   resolved "https://registry.npmjs.org/react-native-is-edge-to-edge/-/react-native-is-edge-to-edge-1.1.6.tgz"

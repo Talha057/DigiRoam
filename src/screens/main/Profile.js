@@ -217,7 +217,7 @@ const ProfileScreen = () => {
               </Text>
               <Text style={profileStyles.infoText}>
                 <Text style={profileStyles.infoTextHeading}>Email:</Text>{' '}
-                {user?.email}
+                {user?.email || 'Not Provided'}
               </Text>
               <Text style={profileStyles.infoText}>
                 <Text style={profileStyles.infoTextHeading}>Phone Number:</Text>{' '}

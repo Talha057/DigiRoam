@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">RoamDigi</string>
+<string name="facebook_app_id">1232254467873718</string>
+<string name="fb_login_protocol_scheme">fb1232254467873718</string>
+<string name="facebook_client_token">0fbf9ee474b6a3d25e308c20c7b09019</string>
 </resources>

@@ -24,6 +24,7 @@
     "react-native-bootsplash": "^6.3.2",
     "react-native-check-box": "^2.1.7",
     "react-native-elements": "^3.4.3",
+    "react-native-fbsdk-next": "^13.4.1",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-reanimated": "^3.16.6",
     "react-native-safe-area-context": "^5.0.0",

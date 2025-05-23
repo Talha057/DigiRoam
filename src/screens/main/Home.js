@@ -2,14 +2,11 @@ import {
   Pressable,
   StatusBar,
   Text,
-  TextInput,
   View,
   Image,
   FlatList,
   ScrollView,
-  ImageBackground,
   TouchableOpacity,
-  StyleSheet,
   SafeAreaView,
 } from 'react-native';
 import {globalColors} from '../../constants/Colors';
@@ -20,14 +17,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useEffect, useState} from 'react';
 import {
   africaMap,
-  banner,
   pakMap,
   usMap,
   dubaiMap,
   ukMap,
   usFlag,
-  pakFlag,
-  africaFlag,
   dubaiFlag,
   ukFlag,
   saudiFlag,

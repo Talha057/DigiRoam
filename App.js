@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Provider, useSelector} from 'react-redux';
 import store from './src/store';
 import {NavigationContainer} from '@react-navigation/native';
-import {StatusBar} from 'react-native';
+import {Platform, StatusBar} from 'react-native';
 import BootSplash from 'react-native-bootsplash';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthStack from './src/navigation/auth';
@@ -12,7 +12,11 @@ import {useDispatch} from 'react-redux';
 import {setToken} from './src/store/auth/authSlice';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-
+import {Settings} from 'react-native-fbsdk-next';
+if (Platform.OS === 'ios') {
+  Settings.setAppID('1232254467873718');
+  Settings.initializeSDK();
+}
 GoogleSignin.configure({
   webClientId:
     '274572296096-anmd45dq03phbotttrh566kqlevq742u.apps.googleusercontent.com',

@@ -17,10 +17,11 @@ import SocialBtn from '../../components/SocialBtn';
 import Feather from 'react-native-vector-icons/Feather';
 import CheckBox from 'react-native-check-box';
 import {useDispatch, useSelector} from 'react-redux';
-import {googleLogin, login} from '../../store/auth/authThunk';
+import {facebookLogin, googleLogin, login} from '../../store/auth/authThunk';
 import Toast from 'react-native-simple-toast';
 import Button from '../../components/Button';
 import {setToken} from '../../store/auth/authSlice';
+import {LoginManager, AccessToken, Profile} from 'react-native-fbsdk-next';
 
 const Login = ({navigation}) => {
   const [checked, setChecked] = useState(true);
@@ -49,8 +50,26 @@ const Login = ({navigation}) => {
   const handleGoogle = async () => {
     try {
       const response = await dispatch(googleLogin()).unwrap();
+      Toast.show(response.message);
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Home'}],
+      });
     } catch (err) {
+      Toast.show(err.message);
       console.log(err);
+    }
+  };
+  const handleFacebookLogin = async () => {
+    try {
+      const response = await dispatch(facebookLogin());
+      Toast.show(response.message);
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Home'}],
+      });
+    } catch (error) {
+      console.error(error);
     }
   };
   return (
@@ -133,7 +152,11 @@ const Login = ({navigation}) => {
             style={loginStyles.socialBtn}
             handleOnPress={handleGoogle}
           />
-          <SocialBtn image={facebook} style={loginStyles.socialBtn} />
+          <SocialBtn
+            image={facebook}
+            style={loginStyles.socialBtn}
+            handleOnPress={handleFacebookLogin}
+          />
         </View>
         <Text style={loginStyles.signupText}>
           New User?{' '}
