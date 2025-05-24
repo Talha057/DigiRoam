@@ -14,14 +14,14 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Settings} from 'react-native-fbsdk-next';
 if (Platform.OS === 'ios') {
-  Settings.setAppID('1232254467873718');
+  Settings.setAppID('514666618249229');
   Settings.initializeSDK();
 }
 GoogleSignin.configure({
   webClientId:
     '274572296096-anmd45dq03phbotttrh566kqlevq742u.apps.googleusercontent.com',
   iosClientId:
-    '991168277602-s72mhsgrhlafp6i69p60gnh4t43k0oke.apps.googleusercontent.com',
+    '274572296096-iuigaqcq554aaeui44vffov4gpnabpib.apps.googleusercontent.com',
 });
 const AppEntry = () => {
   const [loading, setLoading] = useState(true);

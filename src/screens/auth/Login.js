@@ -22,6 +22,8 @@ import Toast from 'react-native-simple-toast';
 import Button from '../../components/Button';
 import {setToken} from '../../store/auth/authSlice';
 import {LoginManager, AccessToken, Profile} from 'react-native-fbsdk-next';
+import {apiManager} from '../../api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({navigation}) => {
   const [checked, setChecked] = useState(true);
@@ -61,15 +63,56 @@ const Login = ({navigation}) => {
     }
   };
   const handleFacebookLogin = async () => {
+    // try {
+    //   const response = await dispatch(facebookLogin());
+    //   Toast.show(response.message);
+    //   navigation.reset({
+    //     index: 0,
+    //     routes: [{name: 'Home'}],
+    //   });
+    // } catch (error) {
+    //   console.error(error);
+    // }
     try {
-      const response = await dispatch(facebookLogin());
+      const result = await LoginManager.logInWithPermissions([
+        'public_profile',
+        'email',
+      ]);
+
+      if (result.isCancelled) {
+        console.log('login cancelled');
+        return;
+      }
+
+      const data = await AccessToken.getCurrentAccessToken();
+
+      if (!data) {
+        console.log('something went wrong');
+        return;
+      }
+
+      const profile = await Profile.getCurrentProfile();
+      console.log(profile);
+      console.log({
+        provider: 'facebook',
+        providerId: profile?.userID, // socialID of google|facebook|apple
+        email: profile?.email, // user email retrieved from google|facebook|apple
+        name: profile?.name, // user name retrieved from google|facebook|apple
+      });
+      const response = await apiManager.post('/auth/native/callback', {
+        provider: 'facebook',
+        providerId: profile?.userID, // socialID of google|facebook|apple
+        email: profile?.email, // user email retrieved from google|facebook|apple
+        name: profile?.name, // user name retrieved from google|facebook|apple
+      });
+      AsyncStorage.setItem('token', JSON.stringify(response.data.accessToken));
       Toast.show(response.message);
       navigation.reset({
         index: 0,
         routes: [{name: 'Home'}],
       });
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.log(err);
     }
   };
   return (
@@ -117,13 +160,13 @@ const Login = ({navigation}) => {
 
         <View style={loginStyles.rememberContainer}>
           <View style={loginStyles.checkboxContainer}>
-            <CheckBox
+            {/* <CheckBox
               onClick={toggleCheckbox}
               isChecked={checked}
               checkedCheckBoxColor="#fff"
               checkBoxColor="#fff"
             />
-            <Text style={loginStyles.rememberText}>Remember Me</Text>
+            <Text style={loginStyles.rememberText}>Remember Me</Text> */}
           </View>
           <Text
             style={loginStyles.forgotpass}

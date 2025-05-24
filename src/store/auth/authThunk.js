@@ -58,9 +58,9 @@ export const googleLogin = createAsyncThunk(
       AsyncStorage.setItem('token', JSON.stringify(response.data.accessToken));
       return response?.data;
     } catch (err) {
+      console.log(err);
       return rejectWithValue({
-        message:
-          err?.response?.data?.message || 'Network Error. Please try again.',
+        message: err?.response?.data?.message || 'Failed. Please try again.',
         code: err?.response?.status || null,
       });
     }
@@ -96,13 +96,12 @@ export const facebookLogin = createAsyncThunk(
         email: profile?.email, // user email retrieved from google|facebook|apple
         name: `${profile.firstName} ${profile.lastName}`, // user name retrieved from google|facebook|apple
       });
-      console.log(response.data);
+
       AsyncStorage.setItem('token', JSON.stringify(response.data.accessToken));
       return response?.data;
     } catch (err) {
       return rejectWithValue({
-        message:
-          err?.response?.data?.message || 'Network Error. Please try again.',
+        message: err?.response?.data?.message || 'Failed. Please try again.',
         code: err?.response?.status || null,
       });
     }

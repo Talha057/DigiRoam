@@ -36,16 +36,16 @@
     <string>facebook</string>
     <key>CFBundleURLSchemes</key>
     <array>
-      <string>fb1232254467873718</string>
+      <string>fb514666618249229</string>
     </array>
   </dict>
 </array>
 <key>FacebookAppID</key>
-<string>1232254467873718</string>
+<string>514666618249229</string>
 <key>FacebookClientToken</key>
-<string>0fbf9ee474b6a3d25e308c20c7b09019</string>
+<string>cb4fa0ba77e81d2e51dfedd8d5eb7913</string>
 <key>FacebookDisplayName</key>
-<string>Roam Digi</string>
+<string>Roamdigi.com</string>
 
 
 <key>LSApplicationQueriesSchemes</key>

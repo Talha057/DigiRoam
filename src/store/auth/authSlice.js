@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {
+  facebookLogin,
   forgotPassword,
   getMyProfile,
   googleLogin,
@@ -36,7 +37,10 @@ const authSlice = createSlice({
     });
 
     builder.addCase(googleLogin.fulfilled, (state, action) => {
-      state.loading = false;
+      state.user = action.payload.user;
+      state.token = action.payload.accessToken;
+    });
+    builder.addCase(facebookLogin.fulfilled, (state, action) => {
       state.user = action.payload.user;
       state.token = action.payload.accessToken;
     });
